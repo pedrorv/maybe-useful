@@ -1,0 +1,28 @@
+{
+  "name": "maybe-useful",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedrorv/maybe-useful.git"
+  },
+  "author": "Pedro Reis <pedroreisv@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pedrorv/maybe-useful/issues"
+  },
+  "homepage": "https://github.com/pedrorv/maybe-useful#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "jest": "^24.9.0",
+    "prettier": "1.18.2",
+    "ts-jest": "^24.1.0",
+    "tslint": "^5.20.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.6.3"
+  }
+}
