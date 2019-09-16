@@ -4,7 +4,7 @@ describe("mouse logger", () => {
   describe("click", () => {
     let clickSpy;
 
-    beforeAll(() => {
+    beforeEach(() => {
       document.body.innerHTML = `
         <div class="outer">
           <div id="middle" class="middle">
@@ -18,8 +18,22 @@ describe("mouse logger", () => {
       document.addEventListener("click", clickSpy);
     });
 
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
     it("should trigger clickLogger", () => {
       (document.querySelector("div.outer") as HTMLElement).click();
+
+      expect(clickSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it("should trigger clickLogger even if the dom gets changed after the event listener is added", () => {
+      document.body.innerHTML = `
+        <div class="outer-new"></div>
+      `;
+
+      (document.querySelector("div.outer-new") as HTMLElement).click();
 
       expect(clickSpy).toHaveBeenCalledTimes(1);
     });

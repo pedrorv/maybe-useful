@@ -1,36 +1,27 @@
 export const click = (e: MouseEvent) => {
-  // const target = <HTMLElement>e.target;
+  const path = Array.from(e.composedPath() as HTMLElement[]);
 
-  // if (
-  //   target &&
-  //   target.nodeName &&
-  //   (target.nodeName === "HTML" || target.nodeName === "BODY")
-  // )
-  //   return;
-
-  const path = e.composedPath() as HTMLElement[];
-
-  console.log(document);
-
-  console.log("document", e);
-  const htmlIndex = Array.from(path)
-    .reverse()
-    .findIndex(x => x && x.nodeName && x.nodeName.toLowerCase() === "html");
-  console.log(htmlIndex);
-  console.log(
-    Array.from(path)
-      .reverse()
-      .slice(htmlIndex)
-      .map(el => {
-        console.log(el);
-        return `${el.nodeName.toLowerCase()}.${el.className
-          .split(" ")
-          .join(".")}`;
-      })
-      .join(" > ")
+  const htmlIndex = path.findIndex(
+    x => x && x.nodeName && x.nodeName.toLowerCase() === "html"
   );
-  // console.log(e.target.innerHTML);
-  console.log(window.location.origin + window.location.pathname);
+
+  const eventPath = Array.from(path)
+    .reverse()
+    .slice(htmlIndex)
+    .map(
+      el =>
+        `${el.nodeName.toLowerCase()}${el.className
+          .split(" ")
+          .filter(x => x)
+          .map(c => `.${c}`)
+          .join("")}`
+    )
+    .join(" ");
+
+  return {
+    eventPath,
+    location: `${window.location.origin}${window.location.pathname}`
+  };
 };
 
 export default {
