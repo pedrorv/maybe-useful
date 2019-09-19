@@ -1,5 +1,5 @@
 {
-  "name": "maybe-useful",
+  "name": "watcher",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pedrorv/maybe-useful.git"
+    "url": "git+https://github.com/pedrorv/watcher.git"
   },
   "author": "Pedro Reis <pedroreisv@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pedrorv/maybe-useful/issues"
+    "url": "https://github.com/pedrorv/watcher/issues"
   },
-  "homepage": "https://github.com/pedrorv/maybe-useful#readme",
+  "homepage": "https://github.com/pedrorv/watcher#readme",
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "@types/ramda": "^0.26.22",
