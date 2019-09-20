@@ -1,4 +1,4 @@
-import { TrackerEvent } from "@/types";
+import { TrackerEvent, TrackerEventProps, WindowProps } from "@/types";
 import {
   enhance,
   extractAttr,
@@ -15,7 +15,7 @@ export const withEventName = (name: string) => enhance(() => ({
   name
 }));
 
-export const withProperties = enhance(({ browserEvent }: TrackerEvent) => {
+export const withProperties = enhance(({ browserEvent }: TrackerEvent): TrackerEventProps => {
   const { altKey, button, clientX, clientY, ctrlKey, metaKey, movementX,
   movementY, screenX, screenY, shiftKey } = browserEvent;
 
@@ -34,7 +34,7 @@ export const withProperties = enhance(({ browserEvent }: TrackerEvent) => {
   }
 });
 
-export const withWindow = enhance(() => {
+export const withWindow = enhance((): { window: WindowProps; } => {
   const { scrollX, scrollY } = window;
   const { origin, pathname } = window.location;
   const { availHeight, availWidth, height, width } = window.screen;
