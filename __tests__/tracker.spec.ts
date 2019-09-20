@@ -1,4 +1,4 @@
-import mouse from "@/trackers/mouse";
+import * as mouse from "@/trackers/mouse";
 
 describe("Tracker", () => {
   let clickSpy;
@@ -11,6 +11,9 @@ describe("Tracker", () => {
           </div>
         </div>
       `;
+
+    // @ts-ignore
+    window.screen.orientation = { type: '' };
 
     clickSpy = jest.spyOn(mouse, "click");
 
@@ -45,7 +48,7 @@ describe("Tracker", () => {
     expect(clickSpy).toHaveBeenCalledTimes(1);
   });
 
-  it("should return the eventPath with ids and classes", () => {
+  it("should return the event path with ids and classes", () => {
     document.body.innerHTML = `
         <div class="outer">
           <div id="middle" class="middle">
@@ -58,7 +61,7 @@ describe("Tracker", () => {
 
     const returnValue = clickSpy.mock.results[0].value;
 
-    expect(returnValue.eventPath).toEqual(
+    expect(returnValue.path).toEqual(
       "html body div.outer div#middle.middle div#inner#super-inner.inner.super-inner"
     );
   });
