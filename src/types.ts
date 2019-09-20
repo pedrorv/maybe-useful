@@ -1,6 +1,9 @@
 export interface TrackerEvent {
   browserEvent: MouseEvent;
-  location: string;
   browserPath?: HTMLElement[];
-  eventPath?: string[];
+  location: {
+    origin: string;
+    pathname: string;
+  };
+  path?: string;
 }

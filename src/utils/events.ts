@@ -9,7 +9,10 @@ import { equals, join, map, pipe, prop, slice, toLower } from "ramda";
 
 export const toTrackerEvent = (browserEvent: MouseEvent): TrackerEvent => ({
   browserEvent,
-  location: `${window.location.origin}${window.location.pathname}`
+  location: {
+    origin: window.location.origin,
+    pathname: window.location.pathname,
+  },
 });
 
 export const withBrowserPath = enhance(({ browserEvent }: TrackerEvent) => ({
@@ -28,7 +31,7 @@ export const withPath = enhance(({ browserPath }: TrackerEvent) => {
     )
   );
 
-  const eventPath = pipe(
+  const path = pipe(
     slice(htmlIndex, Infinity),
     map(
       el => extractAttr("nodeName")(el) + extractIds(el) + extractClasses(el)
@@ -37,5 +40,5 @@ export const withPath = enhance(({ browserPath }: TrackerEvent) => {
     toLower
   )(browserPath);
 
-  return { eventPath };
+  return { path };
 });
