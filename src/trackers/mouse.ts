@@ -1,4 +1,4 @@
-import { toTrackerEvent, withBrowserPath, withEventName, withPath, withWindow, withProperties } from "@/utils/events";
+import { toTrackerEvent, withBrowserPath, withEventName, withPath, withProperties, withWindow } from "@/utils/events";
 import { pipe } from "ramda";
 
 const mouseEvent = pipe(
