@@ -8,11 +8,55 @@ import {
 import { equals, join, map, pipe, prop, slice, toLower } from "ramda";
 
 export const toTrackerEvent = (browserEvent: MouseEvent): TrackerEvent => ({
-  browserEvent,
-  location: {
-    origin: window.location.origin,
-    pathname: window.location.pathname,
-  },
+  browserEvent
+});
+
+export const withEventName = (name: string) => enhance(() => ({
+  name
+}));
+
+export const withProperties = enhance(({ browserEvent }: TrackerEvent) => {
+  const { altKey, button, clientX, clientY, ctrlKey, metaKey, movementX,
+  movementY, screenX, screenY, shiftKey } = browserEvent;
+
+  return {
+    altKey,
+    button,
+    clientX,
+    clientY,
+    ctrlKey,
+    metaKey,
+    movementX,
+    movementY,
+    screenX,
+    screenY,
+    shiftKey,
+  }
+});
+
+export const withWindow = enhance(() => {
+  const { scrollX, scrollY } = window;
+  const { origin, pathname } = window.location;
+  const { availHeight, availWidth, height, width } = window.screen;
+  const orientation = window.screen.orientation.type;
+
+  return {
+    window: {
+      scrollX,
+      scrollY,
+      screen: {
+        availHeight,
+        availWidth,
+        height,
+        width,
+        orientation,
+      },
+      location: {
+        origin,
+        pathname,
+      },
+    }
+  }
 });
 
 export const withBrowserPath = enhance(({ browserEvent }: TrackerEvent) => ({

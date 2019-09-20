@@ -12,6 +12,9 @@ describe("Tracker", () => {
         </div>
       `;
 
+    // @ts-ignore
+    window.screen.orientation = { type: '' };
+
     clickSpy = jest.spyOn(mouse, "click");
 
     document.addEventListener("click", clickSpy);
