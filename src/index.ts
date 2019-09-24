@@ -1,4 +1,4 @@
-import * as mouse from '@/trackers/mouse';
+import mouse from '@/trackers/mouse';
 
 const setupTrackers = () => Object.keys(mouse)
     .forEach(eventName => document.addEventListener(eventName, mouse[eventName]));

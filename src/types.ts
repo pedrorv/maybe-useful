@@ -39,3 +39,16 @@ export interface TrackerEvent {
   properties?: TrackerEventProps;
   window?: WindowProps;
 };
+
+export interface Mouse {
+  click: (e: MouseEvent) => TrackEvent
+  dblclick: (e: MouseEvent) => TrackEvent
+  mousedown: (e: MouseEvent) => TrackEvent
+  mouseenter: (e: MouseEvent) => TrackEvent
+  mouseleave: (e: MouseEvent) => TrackEvent
+  mousemove: (e: MouseEvent) => TrackEvent
+  mouseout: (e: MouseEvent) => TrackEvent
+  mouseup: (e: MouseEvent) => TrackEvent
+  select: (e: MouseEvent) => TrackEvent
+  wheel: (e: MouseEvent) => TrackEvent
+}

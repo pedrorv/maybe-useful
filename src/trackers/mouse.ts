@@ -1,3 +1,4 @@
+import { Mouse } from '@/types';
 import { toTrackerEvent, withBrowserPath, withEventName, withPath, withProperties, withWindow } from "@/utils/events";
 import { pipe } from "ramda";
 
@@ -9,52 +10,26 @@ const mouseEvent = pipe(
   withProperties
 );
 
-export const click = pipe(
-  mouseEvent,
-  withEventName('click')
-);
+const mouseEventsNames = [
+  'click',
+  'dblclick',
+  'mousedown',
+  'mouseenter',
+  'mouseleave',
+  'mousemove',
+  'mouseout',
+  'mouseup',
+  'select',
+  'wheel'
+];
 
-export const dblclick = pipe(
-  mouseEvent,
-  withEventName('dblclick')
-);
+const mouse: Mouse = mouseEventsNames.reduce((acc, eventName) => {
+  acc[eventName] = pipe(
+    mouseEvent,
+    withEventName(eventName)
+  );
 
-export const mousedown = pipe(
-  mouseEvent,
-  withEventName('mousedown')
-);
+  return acc;
+}, {} as any);
 
-export const mouseenter = pipe(
-  mouseEvent,
-  withEventName('mouseenter')
-);
-
-export const mouseleave = pipe(
-  mouseEvent,
-  withEventName('mouseleave')
-);
-
-export const mousemove = pipe(
-  mouseEvent,
-  withEventName('mousemove')
-);
-
-export const mouseout = pipe(
-  mouseEvent,
-  withEventName('mouseout')
-);
-
-export const mouseup = pipe(
-  mouseEvent,
-  withEventName('mouseup')
-);
-
-export const select = pipe(
-  mouseEvent,
-  withEventName('select')
-);
-
-export const wheel = pipe(
-  mouseEvent,
-  withEventName('wheel')
-);
+export default mouse;
