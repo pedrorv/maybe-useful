@@ -29,5 +29,12 @@
   },
   "dependencies": {
     "ramda": "^0.26.1"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "moduleNameMapper": {
+      "@/(.*)": "<rootDir>/src/$1"
+    },
+    "testEnvironment": "jest-environment-jsdom-fourteen"
   }
 }

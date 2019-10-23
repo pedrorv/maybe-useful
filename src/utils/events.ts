@@ -1,4 +1,9 @@
-import { TrackerEvent, TrackerEventProps, WindowProps } from "@/types";
+import {
+  KeyboardTrackerEventProps,
+  MouseTrackerEventProps,
+  TrackerEvent,
+  WindowProps
+} from "@/types";
 import {
   enhance,
   extractAttr,
@@ -7,34 +12,89 @@ import {
 } from "@/utils/common";
 import { equals, join, map, pipe, prop, slice, toLower } from "ramda";
 
-export const toTrackerEvent = (browserEvent: MouseEvent): TrackerEvent => ({
+export const toTrackerEvent = (
+  browserEvent: MouseEvent | KeyboardEvent
+): TrackerEvent => ({
   browserEvent
 });
 
-export const withEventName = (name: string) => enhance(() => ({
-  name
-}));
+export const withEventName = (eventName: string) =>
+  enhance(() => ({
+    eventName
+  }));
 
-export const withProperties = enhance(({ browserEvent }: TrackerEvent): TrackerEventProps => {
-  const { altKey, button, clientX, clientY, ctrlKey, metaKey, movementX,
-  movementY, screenX, screenY, shiftKey } = browserEvent;
+export const withEventType = (eventType: string) =>
+  enhance(() => ({
+    eventType
+  }));
 
-  return {
-    altKey,
-    button,
-    clientX,
-    clientY,
-    ctrlKey,
-    metaKey,
-    movementX,
-    movementY,
-    screenX,
-    screenY,
-    shiftKey,
+export const withKeyboardProperties = enhance(
+  ({ browserEvent }: TrackerEvent): KeyboardTrackerEventProps => {
+    const {
+      altKey,
+      charCode,
+      code,
+      ctrlKey,
+      isComposing,
+      key,
+      keyCode,
+      location,
+      metaKey,
+      repeat,
+      shiftKey,
+      which
+    } = browserEvent as KeyboardEvent;
+
+    return {
+      altKey,
+      charCode,
+      code,
+      ctrlKey,
+      isComposing,
+      key,
+      keyCode,
+      location,
+      metaKey,
+      repeat,
+      shiftKey,
+      which
+    };
   }
-});
+);
 
-export const withWindow = enhance((): { window: WindowProps; } => {
+export const withMouseProperties = enhance(
+  ({ browserEvent }: TrackerEvent): MouseTrackerEventProps => {
+    const {
+      altKey,
+      button,
+      clientX,
+      clientY,
+      ctrlKey,
+      metaKey,
+      movementX,
+      movementY,
+      screenX,
+      screenY,
+      shiftKey
+    } = browserEvent as MouseEvent;
+
+    return {
+      altKey,
+      button,
+      clientX,
+      clientY,
+      ctrlKey,
+      metaKey,
+      movementX,
+      movementY,
+      screenX,
+      screenY,
+      shiftKey
+    };
+  }
+);
+
+export const withWindow = enhance((): { window: WindowProps } => {
   const { scrollX, scrollY } = window;
   const { origin, pathname } = window.location;
   const { availHeight, availWidth, height, width } = window.screen;
@@ -49,14 +109,14 @@ export const withWindow = enhance((): { window: WindowProps; } => {
         availWidth,
         height,
         width,
-        orientation,
+        orientation
       },
       location: {
         origin,
-        pathname,
-      },
+        pathname
+      }
     }
-  }
+  };
 });
 
 export const withBrowserPath = enhance(({ browserEvent }: TrackerEvent) => ({
@@ -86,3 +146,10 @@ export const withPath = enhance(({ browserPath }: TrackerEvent) => {
 
   return { path };
 });
+
+export const createEvent = pipe(
+  toTrackerEvent,
+  withBrowserPath,
+  withPath,
+  withWindow
+);
