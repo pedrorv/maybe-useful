@@ -1,6 +1,11 @@
-import mouse from '@/trackers/mouse';
+import keyboard from "@/trackers/keyboard";
+import mouse from "@/trackers/mouse";
 
-const setupTrackers = () => Object.keys(mouse)
-    .forEach(eventName => document.addEventListener(eventName, mouse[eventName]));
+const setupTrackers = () =>
+  [keyboard, mouse].forEach(tracker =>
+    Object.keys(tracker).forEach(eventName =>
+      document.addEventListener(eventName, tracker[eventName])
+    )
+  );
 
 window.onload = setupTrackers;
