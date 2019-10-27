@@ -1,7 +1,7 @@
 import { Keyboard } from "@/types";
 import {
   createEvent,
-  withEventName,
+  trackerFactory,
   withEventType,
   withKeyboardProperties
 } from "@/utils/events";
@@ -15,16 +15,9 @@ const keyboardEvent = pipe(
 
 const keyboardEventNames = ["keydown", "keypress", "keyup"];
 
-const keyboard: Keyboard = keyboardEventNames.reduce(
-  (acc, eventName) => {
-    acc[eventName] = pipe(
-      keyboardEvent,
-      withEventName(eventName)
-    );
+const keyboardTracker = trackerFactory(
+  keyboardEventNames,
+  keyboardEvent
+) as Keyboard;
 
-    return acc;
-  },
-  {} as any
-);
-
-export default keyboard;
+export default keyboardTracker;

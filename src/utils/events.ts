@@ -1,7 +1,9 @@
 import {
+  BrowserEvent,
   KeyboardTrackerEventProps,
   MouseTrackerEventProps,
   TrackerEvent,
+  TrackerType,
   WindowProps
 } from "@/types";
 import {
@@ -12,9 +14,7 @@ import {
 } from "@/utils/common";
 import { equals, join, map, pipe, prop, slice, toLower } from "ramda";
 
-export const toTrackerEvent = (
-  browserEvent: MouseEvent | KeyboardEvent
-): TrackerEvent => ({
+export const toTrackerEvent = (browserEvent: BrowserEvent): TrackerEvent => ({
   browserEvent
 });
 
@@ -153,3 +153,19 @@ export const createEvent = pipe(
   withPath,
   withWindow
 );
+
+export const trackerFactory = (
+  eventNames: string[],
+  trackerEvent: (e: BrowserEvent) => R.Merge<object, object>
+): TrackerType =>
+  eventNames.reduce(
+    (acc, eventName) => {
+      acc[eventName] = pipe(
+        trackerEvent,
+        withEventName(eventName)
+      );
+
+      return acc;
+    },
+    {} as any
+  );
