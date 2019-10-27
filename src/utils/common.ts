@@ -37,6 +37,8 @@ export const trackerFactory = (
         trackerEvent,
         withEventName(eventName)
       );
+
+      return acc;
     },
     {} as any
   );
