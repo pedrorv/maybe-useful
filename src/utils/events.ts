@@ -1,4 +1,5 @@
 import {
+  BrowserEvent,
   KeyboardTrackerEventProps,
   MouseTrackerEventProps,
   TrackerEvent,
@@ -12,9 +13,7 @@ import {
 } from "@/utils/common";
 import { equals, join, map, pipe, prop, slice, toLower } from "ramda";
 
-export const toTrackerEvent = (
-  browserEvent: MouseEvent | KeyboardEvent
-): TrackerEvent => ({
+export const toTrackerEvent = (browserEvent: BrowserEvent): TrackerEvent => ({
   browserEvent
 });
 
