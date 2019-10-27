@@ -1,16 +1,6 @@
-export interface MouseTrackerEventProps {
-  altKey: boolean;
-  button: number;
-  clientX: number;
-  clientY: number;
-  ctrlKey: boolean;
-  metaKey: boolean;
-  movementX: number;
-  movementY: number;
-  screenX: number;
-  screenY: number;
-  shiftKey: boolean;
-}
+export type BrowserEvent = KeyboardEvent | MouseEvent | DragEvent;
+
+export type DragTrackerEventProps = MouseTrackerEventProps;
 
 export interface KeyboardTrackerEventProps {
   altKey: boolean;
@@ -25,6 +15,20 @@ export interface KeyboardTrackerEventProps {
   repeat: boolean;
   shiftKey: boolean;
   which: number;
+}
+
+export interface MouseTrackerEventProps {
+  altKey: boolean;
+  button: number;
+  clientX: number;
+  clientY: number;
+  ctrlKey: boolean;
+  metaKey: boolean;
+  movementX: number;
+  movementY: number;
+  screenX: number;
+  screenY: number;
+  shiftKey: boolean;
 }
 
 export interface ScreenProps {
@@ -48,7 +52,7 @@ export interface WindowProps {
 }
 
 export interface TrackerEvent {
-  browserEvent: MouseEvent | KeyboardEvent;
+  browserEvent: BrowserEvent;
   browserPath?: HTMLElement[];
   path?: string;
   properties?: MouseTrackerEventProps;
@@ -73,3 +77,15 @@ export interface Keyboard {
   keypress: (e: KeyboardEvent) => TrackEvent;
   keyup: (e: KeyboardEvent) => TrackEvent;
 }
+
+export interface Drag {
+  drag: (e: DragEvent) => TrackEvent;
+  dragend: (e: DragEvent) => TrackEvent;
+  dragenter: (e: DragEvent) => TrackEvent;
+  dragstart: (e: DragEvent) => TrackEvent;
+  dragleave: (e: DragEvent) => TrackEvent;
+  dragover: (e: DragEvent) => TrackEvent;
+  drop: (e: DragEvent) => TrackEvent;
+}
+
+export type TrackerType = Drag | Keyboard | Mouse;
