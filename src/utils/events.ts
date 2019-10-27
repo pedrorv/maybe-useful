@@ -3,6 +3,7 @@ import {
   KeyboardTrackerEventProps,
   MouseTrackerEventProps,
   TrackerEvent,
+  TrackerType,
   WindowProps
 } from "@/types";
 import {
@@ -152,3 +153,19 @@ export const createEvent = pipe(
   withPath,
   withWindow
 );
+
+export const trackerFactory = (
+  eventNames: string[],
+  trackerEvent: (e: BrowserEvent) => R.Merge<object, object>
+): TrackerType =>
+  eventNames.reduce(
+    (acc, eventName) => {
+      acc[eventName] = pipe(
+        trackerEvent,
+        withEventName(eventName)
+      );
+
+      return acc;
+    },
+    {} as any
+  );

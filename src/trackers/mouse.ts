@@ -1,7 +1,7 @@
 import { Mouse } from "@/types";
-import { trackerFactory } from "@/utils/common";
 import {
   createEvent,
+  trackerFactory,
   withEventType,
   withMouseProperties
 } from "@/utils/events";
@@ -26,9 +26,6 @@ const mouseEventNames = [
   "wheel"
 ];
 
-const mouseTracker: Mouse = trackerFactory(
-  mouseEventNames,
-  mouseEvent
-) as Mouse;
+const mouseTracker = trackerFactory(mouseEventNames, mouseEvent) as Mouse;
 
 export default mouseTracker;

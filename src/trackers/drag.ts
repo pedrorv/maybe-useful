@@ -1,7 +1,7 @@
 import { Drag } from "@/types";
-import { trackerFactory } from "@/utils/common";
 import {
   createEvent,
+  trackerFactory,
   withEventType,
   withMouseProperties
 } from "@/utils/events";
@@ -23,6 +23,6 @@ const dragEventNames = [
   "drop"
 ];
 
-const dragTracker: Drag = trackerFactory(dragEventNames, dragEvent) as Drag;
+const dragTracker = trackerFactory(dragEventNames, dragEvent) as Drag;
 
 export default dragTracker;
