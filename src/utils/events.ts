@@ -156,7 +156,7 @@ export const createEvent = pipe(
 
 export const trackerFactory = (
   eventNames: string[],
-  trackerEvent: (e: BrowserEvent) => R.Merge<object, object>
+  trackerEvent: (e: BrowserEvent) => R.Merge<object, object, "deep">
 ): TrackerType =>
   eventNames.reduce(
     (acc, eventName) => {
