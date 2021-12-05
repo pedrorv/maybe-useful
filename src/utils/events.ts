@@ -11,8 +11,9 @@ import {
   extractAttr,
   extractClasses,
   extractIds
-} from "../utils/common";
+} from "./common";
 import { equals,  pipe, prop, toLower } from "ramda";
+import { logEvent } from "./logger";
 
 export const toTrackerEvent = (browserEvent: BrowserEvent): TrackerEvent => ({
   browserEvent
@@ -159,7 +160,8 @@ export const trackerFactory = (
     (acc, eventName) => {
       acc[eventName] = pipe(
         trackerEvent,
-        withEventName(eventName)
+        withEventName(eventName),
+        logEvent
       );
 
       return acc;
