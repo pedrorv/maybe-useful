@@ -12,7 +12,7 @@ import {
   extractClasses,
   extractIds
 } from "@/utils/common";
-import { equals, join, map, pipe, prop, slice, toLower } from "ramda";
+import { equals,  pipe, prop, toLower } from "ramda";
 
 export const toTrackerEvent = (browserEvent: BrowserEvent): TrackerEvent => ({
   browserEvent
@@ -135,16 +135,11 @@ export const withPath = enhance(({ browserPath }: TrackerEvent) => {
     )
   );
 
-  const path = pipe(
-    slice(htmlIndex, Infinity),
-    // @ts-ignore
-    map(
-      (el: HTMLElement) => extractAttr("nodeName")(el) + extractIds(el) + extractClasses(el)
-    ),
-    join(" "),
-    toLower
-    // @ts-ignore
-  )(browserPath);
+  const filteredBrowserPath = browserPath.slice(htmlIndex, Infinity);
+  const path = filteredBrowserPath
+    .map((el: HTMLElement) => extractAttr("nodeName")(el) + extractIds(el) + extractClasses(el))
+    .join(' ')
+    .toLocaleLowerCase();
 
   return { path };
 });
