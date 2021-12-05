@@ -1,4 +1,5 @@
 import mouse from "../src/trackers/mouse";
+import { clearEvents, getEvents } from "../src/utils/logger";
 
 describe("Tracker", () => {
   let clickSpy;
@@ -22,6 +23,7 @@ describe("Tracker", () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+    clearEvents();
   });
 
   it("should trigger the click tracker", () => {
@@ -64,5 +66,24 @@ describe("Tracker", () => {
     expect(returnValue.path).toEqual(
       "html body div.outer div#middle.middle div#inner#super-inner.inner.super-inner"
     );
+  });
+
+  it("should log events", () => {
+    document.body.innerHTML = `<div class="log"></div>`;
+
+    (document.querySelector("div.log") as HTMLElement).click();
+    (document.querySelector("div.log") as HTMLElement).click();
+    (document.querySelector("div.log") as HTMLElement).click();
+
+    expect(getEvents().length).toEqual(3);
+  });
+
+  it("should clear logged events", () => {
+    document.body.innerHTML = `<div class="log"></div>`;
+
+    (document.querySelector("div.log") as HTMLElement).click();
+    clearEvents();
+
+    expect(getEvents().length).toEqual(0);
   });
 });
