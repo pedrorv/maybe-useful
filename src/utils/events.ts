@@ -137,11 +137,13 @@ export const withPath = enhance(({ browserPath }: TrackerEvent) => {
 
   const path = pipe(
     slice(htmlIndex, Infinity),
+    // @ts-ignore
     map(
-      el => extractAttr("nodeName")(el) + extractIds(el) + extractClasses(el)
+      (el: HTMLElement) => extractAttr("nodeName")(el) + extractIds(el) + extractClasses(el)
     ),
     join(" "),
     toLower
+    // @ts-ignore
   )(browserPath);
 
   return { path };
