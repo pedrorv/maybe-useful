@@ -1,17 +1,9 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "esModuleInterop": true,
+    "module": "es6",
     "target": "es5",
-    "sourceMap": true,
-    "outDir": "dist",
-    "resolveJsonModule": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    "outDir": "./dist/",
+    "moduleResolution": "node"
   },
-  "lib": ["es2015"],
   "exclude": ["node_modules"]
 }

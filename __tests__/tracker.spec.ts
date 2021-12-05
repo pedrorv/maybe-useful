@@ -1,4 +1,4 @@
-import mouse from "@/trackers/mouse";
+import mouse from "../src/trackers/mouse";
 
 describe("Tracker", () => {
   let clickSpy;
