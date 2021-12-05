@@ -5,13 +5,13 @@ import {
   TrackerEvent,
   TrackerType,
   WindowProps
-} from "@/types";
+} from "../types";
 import {
   enhance,
   extractAttr,
   extractClasses,
   extractIds
-} from "@/utils/common";
+} from "../utils/common";
 import { equals,  pipe, prop, toLower } from "ramda";
 
 export const toTrackerEvent = (browserEvent: BrowserEvent): TrackerEvent => ({

@@ -1,10 +1,10 @@
-import { Drag } from "@/types";
+import { Drag } from "../types";
 import {
   createEvent,
   trackerFactory,
   withEventType,
   withMouseProperties
-} from "@/utils/events";
+} from "../utils/events";
 import { pipe } from "ramda";
 
 const dragEvent = pipe(

@@ -1,10 +1,10 @@
-import { Keyboard } from "@/types";
+import { Keyboard } from "../types";
 import {
   createEvent,
   trackerFactory,
   withEventType,
   withKeyboardProperties
-} from "@/utils/events";
+} from "../utils/events";
 import { pipe } from "ramda";
 
 const keyboardEvent = pipe(
