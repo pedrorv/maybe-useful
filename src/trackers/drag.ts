@@ -3,15 +3,11 @@ import {
   createEvent,
   trackerFactory,
   withEventType,
-  withMouseProperties
+  withMouseProperties,
 } from "../utils/events";
 import { pipe } from "ramda";
 
-const dragEvent = pipe(
-  createEvent,
-  withMouseProperties,
-  withEventType("drag")
-);
+const dragEvent = pipe(createEvent, withMouseProperties, withEventType("drag"));
 
 const dragEventNames = [
   "drag",
@@ -20,7 +16,7 @@ const dragEventNames = [
   "dragstart",
   "dragleave",
   "dragover",
-  "drop"
+  "drop",
 ];
 
 const dragTracker = trackerFactory(dragEventNames, dragEvent) as Drag;

@@ -3,7 +3,7 @@ import {
   createEvent,
   trackerFactory,
   withEventType,
-  withMouseProperties
+  withMouseProperties,
 } from "../utils/events";
 import { pipe } from "ramda";
 
@@ -23,7 +23,7 @@ const mouseEventNames = [
   "mouseout",
   "mouseup",
   "select",
-  "wheel"
+  "wheel",
 ];
 
 const mouseTracker = trackerFactory(mouseEventNames, mouseEvent) as Mouse;

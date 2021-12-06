@@ -1,6 +1,6 @@
 import { TrackerEvent } from "../types";
 
-const events: TrackerEvent[] = []
+const events: TrackerEvent[] = [];
 
 export const logEvent = (e: TrackerEvent): TrackerEvent => {
   events.push(e);

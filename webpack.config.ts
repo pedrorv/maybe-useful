@@ -1,7 +1,7 @@
-import * as path from 'path';
-import * as webpack from 'webpack';
+import * as path from "path";
+import * as webpack from "webpack";
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === "production";
 
 const config: webpack.Configuration = {
   entry: "./src/main.ts",
@@ -15,7 +15,7 @@ const config: webpack.Configuration = {
       },
     ],
   },
-  devtool: "inline-source-map",
+  devtool: isProd ? undefined : "inline-source-map",
   resolve: {
     extensions: [".wasm", ".mjs", ".js", ".jsx", ".ts", ".tsx", ".json"],
   },

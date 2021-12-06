@@ -3,7 +3,7 @@ import {
   createEvent,
   trackerFactory,
   withEventType,
-  withKeyboardProperties
+  withKeyboardProperties,
 } from "../utils/events";
 import { pipe } from "ramda";
 

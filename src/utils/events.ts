@@ -4,29 +4,24 @@ import {
   MouseTrackerEventProps,
   TrackerEvent,
   TrackerType,
-  WindowProps
+  WindowProps,
 } from "../types";
-import {
-  enhance,
-  extractAttr,
-  extractClasses,
-  extractIds
-} from "./common";
-import { equals,  pipe, prop, toLower } from "ramda";
+import { enhance, extractAttr, extractClasses, extractIds } from "./common";
+import { equals, pipe, prop, toLower } from "ramda";
 import { logEvent } from "./logger";
 
 export const toTrackerEvent = (browserEvent: BrowserEvent): TrackerEvent => ({
-  browserEvent
+  browserEvent,
 });
 
 export const withEventName = (eventName: string) =>
   enhance(() => ({
-    eventName
+    eventName,
   }));
 
 export const withEventType = (eventType: string) =>
   enhance(() => ({
-    eventType
+    eventType,
   }));
 
 export const withKeyboardProperties = enhance(
@@ -43,7 +38,7 @@ export const withKeyboardProperties = enhance(
       metaKey,
       repeat,
       shiftKey,
-      which
+      which,
     } = browserEvent as KeyboardEvent;
 
     return {
@@ -58,7 +53,7 @@ export const withKeyboardProperties = enhance(
       metaKey,
       repeat,
       shiftKey,
-      which
+      which,
     };
   }
 );
@@ -76,7 +71,7 @@ export const withMouseProperties = enhance(
       movementY,
       screenX,
       screenY,
-      shiftKey
+      shiftKey,
     } = browserEvent as MouseEvent;
 
     return {
@@ -90,7 +85,7 @@ export const withMouseProperties = enhance(
       movementY,
       screenX,
       screenY,
-      shiftKey
+      shiftKey,
     };
   }
 );
@@ -110,38 +105,36 @@ export const withWindow = enhance((): { window: WindowProps } => {
         availWidth,
         height,
         width,
-        orientation
+        orientation,
       },
       location: {
         origin,
-        pathname
-      }
-    }
+        pathname,
+      },
+    },
   };
 });
 
 export const withBrowserPath = enhance(({ browserEvent }: TrackerEvent) => ({
   browserPath: Array.from(
     browserEvent.composedPath() as HTMLElement[]
-  ).reverse()
+  ).reverse(),
 }));
 
 export const withPath = enhance(({ browserPath }: TrackerEvent) => {
   const htmlIndex = browserPath.findIndex(
-    pipe(
-      prop("nodeName"),
-      String,
-      toLower,
-      equals("html")
-    )
+    pipe(prop("nodeName"), String, toLower, equals("html"))
   );
 
   if (htmlIndex === -1) return { path: [] };
 
   const filteredBrowserPath = browserPath.slice(htmlIndex, Infinity);
   const path = filteredBrowserPath
-    .map((el: HTMLElement) => extractAttr("nodeName")(el) + extractIds(el) + extractClasses(el))
-    .join(' ')
+    .map(
+      (el: HTMLElement) =>
+        extractAttr("nodeName")(el) + extractIds(el) + extractClasses(el)
+    )
+    .join(" ")
     .toLocaleLowerCase();
 
   return { path };
@@ -158,15 +151,8 @@ export const trackerFactory = (
   eventNames: string[],
   trackerEvent: (e: BrowserEvent) => R.Merge<object, object, "deep">
 ): TrackerType =>
-  eventNames.reduce(
-    (acc, eventName) => {
-      acc[eventName] = pipe(
-        trackerEvent,
-        withEventName(eventName),
-        logEvent
-      );
+  eventNames.reduce((acc, eventName) => {
+    acc[eventName] = pipe(trackerEvent, withEventName(eventName), logEvent);
 
-      return acc;
-    },
-    {} as any
-  );
+    return acc;
+  }, {} as any);
