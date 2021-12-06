@@ -2,7 +2,7 @@ const path = require("path");
 
 module.exports = {
   entry: "./src/main.ts",
-  mode: "production",
+  mode: process.env.NODE_ENV || "development",
   module: {
     rules: [
       {
@@ -12,12 +12,19 @@ module.exports = {
       },
     ],
   },
+  devtool: "inline-source-map",
   resolve: {
-    extensions: [".tsx", ".ts"],
+    extensions: [".wasm", ".mjs", ".js", ".jsx", ".ts", ".tsx", ".json"],
   },
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "watcher.js",
     library: "watcher",
+  },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "public"),
+    },
+    port: 9000,
   },
 };
