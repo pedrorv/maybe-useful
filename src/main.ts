@@ -2,6 +2,7 @@ import drag from './trackers/drag';
 import keyboard from "./trackers/keyboard";
 import mouse from "./trackers/mouse";
 import { getEvents } from './utils/logger';
+import { takeScreenshot } from './utils/screenshot';
 
 export const setupTrackers = () =>
   [drag, keyboard, mouse].forEach(tracker =>
@@ -11,7 +12,7 @@ export const setupTrackers = () =>
     })
   );
 
-export { getEvents };
+export { getEvents, takeScreenshot };
 
 if (window && window.addEventListener) {
   window.addEventListener("load", setupTrackers);
