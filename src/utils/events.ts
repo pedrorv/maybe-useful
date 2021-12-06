@@ -136,6 +136,8 @@ export const withPath = enhance(({ browserPath }: TrackerEvent) => {
     )
   );
 
+  if (htmlIndex === -1) return { path: [] };
+
   const filteredBrowserPath = browserPath.slice(htmlIndex, Infinity);
   const path = filteredBrowserPath
     .map((el: HTMLElement) => extractAttr("nodeName")(el) + extractIds(el) + extractClasses(el))
