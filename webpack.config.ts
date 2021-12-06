@@ -1,8 +1,11 @@
-const path = require("path");
+import * as path from 'path';
+import * as webpack from 'webpack';
 
-module.exports = {
+const isProd = process.env.NODE_ENV === 'production';
+
+const config: webpack.Configuration = {
   entry: "./src/main.ts",
-  mode: process.env.NODE_ENV || "development",
+  mode: isProd ? "production" : "development",
   module: {
     rules: [
       {
@@ -28,3 +31,5 @@ module.exports = {
     port: 9000,
   },
 };
+
+export default config;
