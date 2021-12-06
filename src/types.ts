@@ -52,7 +52,7 @@ export interface WindowProps {
 }
 
 export interface TrackerEvent {
-  browserEvent: BrowserEvent;
+  browserEvent?: BrowserEvent;
   browserPath?: HTMLElement[];
   path?: string;
   properties?: MouseTrackerEventProps;

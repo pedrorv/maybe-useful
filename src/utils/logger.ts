@@ -3,7 +3,7 @@ import { TrackerEvent } from "../types";
 const events: TrackerEvent[] = [];
 
 export const logEvent = (e: TrackerEvent): TrackerEvent => {
-  events.push(e);
+  events.push({ ...e, browserEvent: undefined, browserPath: undefined });
   return e;
 };
 
