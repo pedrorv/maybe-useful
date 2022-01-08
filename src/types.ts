@@ -57,6 +57,7 @@ export interface TrackerEvent {
   path?: string;
   properties?: MouseTrackerEventProps;
   window?: WindowProps;
+  screenshot?: string;
 }
 
 export interface Mouse {
