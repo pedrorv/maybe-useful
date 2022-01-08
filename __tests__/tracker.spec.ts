@@ -1,4 +1,4 @@
-import mouse from "../src/trackers/mouse";
+import { MouseTracker } from "../src/trackers";
 import { clearEvents, getEvents } from "../src/utils/logger";
 
 describe("Tracker", () => {
@@ -14,9 +14,9 @@ describe("Tracker", () => {
       `;
 
     // @ts-ignore
-    window.screen.orientation = { type: '' };
+    window.screen.orientation = { type: "" };
 
-    clickSpy = jest.spyOn(mouse, "click");
+    clickSpy = jest.spyOn(MouseTracker, "track");
 
     document.addEventListener("click", clickSpy);
   });

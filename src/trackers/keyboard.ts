@@ -1,23 +1,52 @@
-import { Keyboard } from "../types";
-import {
-  createEvent,
-  trackerFactory,
-  withEventType,
-  withKeyboardProperties,
-} from "../utils/events";
-import { pipe } from "ramda";
+import { KeyboardWatcherEvent } from "../types";
+import { getTrackerPath, getWindowProps } from "../utils/common";
+import { logEvent } from "../utils/logger";
 
-const keyboardEvent = pipe(
-  createEvent,
-  withKeyboardProperties,
-  withEventType("keyboard")
-);
+export class KeyboardTracker {
+  static get eventNames(): string[] {
+    return ["keydown", "keypress", "keyup"];
+  }
 
-const keyboardEventNames = ["keydown", "keypress", "keyup"];
+  static get listenerElement() {
+    return document;
+  }
 
-const keyboardTracker = trackerFactory(
-  keyboardEventNames,
-  keyboardEvent
-) as Keyboard;
+  static track(e: KeyboardEvent): KeyboardWatcherEvent {
+    const event = KeyboardTracker.toWatcherEvent(e);
+    logEvent(event);
+    return event;
+  }
 
-export default keyboardTracker;
+  static toWatcherEvent(e: KeyboardEvent): KeyboardWatcherEvent {
+    const {
+      altKey,
+      code,
+      ctrlKey,
+      isComposing,
+      key,
+      location,
+      metaKey,
+      repeat,
+      shiftKey,
+    } = e as KeyboardEvent;
+
+    return {
+      eventType: "keyboard",
+      eventName: e.type,
+      path: getTrackerPath(e),
+      window: getWindowProps(),
+      properties: {
+        altKey,
+        code,
+        ctrlKey,
+        isComposing,
+        key,
+        location,
+        metaKey,
+        repeat,
+        shiftKey,
+      },
+      timestamp: Date.now(),
+    };
+  }
+}

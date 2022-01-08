@@ -1,19 +1,7 @@
-import { TrackerEvent } from "../types";
+const events: any[] = [];
 
-type LoggedEvent = TrackerEvent & { timestamp: number };
-
-const events: LoggedEvent[] = [];
-
-export const logEvent = (e: TrackerEvent): LoggedEvent => {
-  const loggedEvent = {
-    ...e,
-    timestamp: Date.now(),
-    browserEvent: undefined,
-    browserPath: undefined,
-  };
-
-  events.push(loggedEvent);
-  return loggedEvent;
+export const logEvent = (e: any): void => {
+  events.push(e);
 };
 
 export const getEvents = () => [...events];
