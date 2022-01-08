@@ -1,0 +1,46 @@
+import { UIWatcherEvent } from "../types";
+import { getWindowProps } from "../utils/common";
+import { logEvent } from "../utils/logger";
+import { takeScreenshot } from "../utils/screenshot";
+
+export class UITracker {
+  static get eventNames(): string[] {
+    return ["resize", "scroll"];
+  }
+
+  static get listenerElement() {
+    return window;
+  }
+
+  private static async trackBase(e: UIEvent | string) {
+    const event = await UITracker.toWatcherEvent(e);
+    if (!event) return null;
+
+    logEvent(event);
+    return event;
+  }
+
+  static async track(e: UIEvent): Promise<UIWatcherEvent | null> {
+    return UITracker.trackBase(e);
+  }
+
+  static async trackDOMChange() {
+    return UITracker.trackBase("dom-change");
+  }
+
+  static async toWatcherEvent(
+    e: UIEvent | string
+  ): Promise<UIWatcherEvent | null> {
+    const screenshot = await takeScreenshot();
+    const eventName = typeof e === "string" ? e : e.type;
+
+    return {
+      eventType: "ui",
+      eventName,
+      path: "",
+      window: getWindowProps(),
+      properties: { screenshot },
+      timestamp: Date.now(),
+    };
+  }
+}

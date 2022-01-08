@@ -1,31 +1,67 @@
-import { Mouse } from "../types";
-import {
-  createEvent,
-  trackerFactory,
-  withEventType,
-  withMouseProperties,
-} from "../utils/events";
-import { pipe } from "ramda";
+import { MouseWatcherEvent } from "../types";
+import { getTrackerPath, getWindowProps } from "../utils/common";
+import { logEvent } from "../utils/logger";
 
-const mouseEvent = pipe(
-  createEvent,
-  withMouseProperties,
-  withEventType("mouse")
-);
+export class MouseTracker {
+  static get eventNames(): string[] {
+    return [
+      "click",
+      "dblclick",
+      "mousedown",
+      "mouseenter",
+      "mouseleave",
+      "mousemove",
+      "mouseout",
+      "mouseup",
+      "select",
+      "wheel",
+    ];
+  }
 
-const mouseEventNames = [
-  "click",
-  "dblclick",
-  "mousedown",
-  "mouseenter",
-  "mouseleave",
-  "mousemove",
-  "mouseout",
-  "mouseup",
-  "select",
-  "wheel",
-];
+  static get listenerElement() {
+    return document;
+  }
 
-const mouseTracker = trackerFactory(mouseEventNames, mouseEvent) as Mouse;
+  static track(e: MouseEvent): MouseWatcherEvent {
+    const event = MouseTracker.toWatcherEvent(e);
+    logEvent(event);
+    return event;
+  }
 
-export default mouseTracker;
+  static toWatcherEvent(e: MouseEvent): MouseWatcherEvent {
+    const {
+      altKey,
+      button,
+      clientX,
+      clientY,
+      ctrlKey,
+      metaKey,
+      movementX,
+      movementY,
+      screenX,
+      screenY,
+      shiftKey,
+    } = e as MouseEvent;
+
+    return {
+      eventType: "mouse",
+      eventName: e.type,
+      path: getTrackerPath(e),
+      window: getWindowProps(),
+      properties: {
+        altKey,
+        button,
+        clientX,
+        clientY,
+        ctrlKey,
+        metaKey,
+        movementX,
+        movementY,
+        screenX,
+        screenY,
+        shiftKey,
+      },
+      timestamp: Date.now(),
+    };
+  }
+}

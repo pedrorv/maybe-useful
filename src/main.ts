@@ -1,14 +1,10 @@
-import drag from "./trackers/drag";
-import keyboard from "./trackers/keyboard";
-import mouse from "./trackers/mouse";
-import { getEvents, logEvent } from "./utils/logger";
-import { takeScreenshot } from "./utils/screenshot";
-
-const logScreen = async () => {
-  const screenshot = await takeScreenshot();
-  console.log("screenshot");
-  if (screenshot) logEvent({ screenshot });
-};
+import {
+  DragTracker,
+  KeyboardTracker,
+  MouseTracker,
+  UITracker,
+} from "./trackers";
+import { getEvents } from "./utils/logger";
 
 let domObserver;
 
@@ -18,7 +14,7 @@ if (MutationObserver) {
       [...Array.from(m.addedNodes), ...Array.from(m.removedNodes)].forEach(
         (node) => {
           // Discards all iframes because os html2canvas
-          if (node.nodeName !== "IFRAME") logScreen();
+          if (node.nodeName !== "IFRAME") UITracker.trackDOMChange();
         }
       );
     });
@@ -32,17 +28,12 @@ export const setupTrackers = () => {
     subtree: true,
   });
 
-  [drag, keyboard, mouse].forEach((tracker) =>
-    Object.keys(tracker).forEach((eventName) => {
-      document.removeEventListener(eventName, tracker[eventName]);
-      document.addEventListener(eventName, tracker[eventName]);
+  [DragTracker, KeyboardTracker, MouseTracker, UITracker].forEach((tracker) =>
+    tracker.eventNames.forEach((eventName) => {
+      tracker.listenerElement.removeEventListener(eventName, tracker.track);
+      tracker.listenerElement.addEventListener(eventName, tracker.track);
     })
   );
-
-  ["resize", "scroll"].forEach((eventName) => {
-    window.removeEventListener(eventName, logScreen);
-    window.addEventListener(eventName, logScreen);
-  });
 };
 
 export { getEvents };
