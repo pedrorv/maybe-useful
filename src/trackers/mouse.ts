@@ -28,7 +28,7 @@ export class MouseTracker {
     return event;
   }
 
-  static toWatcherEvent(e: MouseEvent): MouseWatcherEvent {
+  private static toWatcherEvent(e: MouseEvent): MouseWatcherEvent {
     const {
       altKey,
       button,

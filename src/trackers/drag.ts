@@ -25,7 +25,7 @@ export class DragTracker {
     return event;
   }
 
-  static toWatcherEvent(e: DragEvent): DragWatcherEvent {
+  private static toWatcherEvent(e: DragEvent): DragWatcherEvent {
     const {
       altKey,
       button,

@@ -28,7 +28,7 @@ export class UITracker {
     return UITracker.trackBase("dom-change");
   }
 
-  static async toWatcherEvent(
+  private static async toWatcherEvent(
     e: UIEvent | string
   ): Promise<UIWatcherEvent | null> {
     const screenshot = await takeScreenshot();

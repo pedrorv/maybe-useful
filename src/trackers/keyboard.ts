@@ -17,7 +17,7 @@ export class KeyboardTracker {
     return event;
   }
 
-  static toWatcherEvent(e: KeyboardEvent): KeyboardWatcherEvent {
+  private static toWatcherEvent(e: KeyboardEvent): KeyboardWatcherEvent {
     const {
       altKey,
       code,
