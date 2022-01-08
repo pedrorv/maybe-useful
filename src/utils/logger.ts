@@ -1,10 +1,19 @@
 import { TrackerEvent } from "../types";
 
-const events: TrackerEvent[] = [];
+type LoggedEvent = TrackerEvent & { timestamp: number };
 
-export const logEvent = (e: TrackerEvent): TrackerEvent => {
-  events.push({ ...e, browserEvent: undefined, browserPath: undefined });
-  return e;
+const events: LoggedEvent[] = [];
+
+export const logEvent = (e: TrackerEvent): LoggedEvent => {
+  const loggedEvent = {
+    ...e,
+    timestamp: Date.now(),
+    browserEvent: undefined,
+    browserPath: undefined,
+  };
+
+  events.push(loggedEvent);
+  return loggedEvent;
 };
 
 export const getEvents = () => [...events];
