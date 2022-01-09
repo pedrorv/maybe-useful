@@ -1,27 +1,18 @@
-import { defaultTo, filter, join, map, merge, pipe, prop, split } from "ramda";
 import { BrowserEvent, WindowProps } from "../types";
 
-export const enhance = (fn: (o: object) => object) => (o: object) =>
-  merge(o, fn(o));
-
-export const extractAttr = (attr: string) =>
-  pipe(defaultTo({ [attr]: "" }), prop(attr));
-
-export const extractClasses = pipe(
-  extractAttr("className"),
-  split(" "),
-  filter(Boolean),
-  map((className) => `.${className}`),
-  join("")
-);
-
-export const extractIds = pipe(
-  extractAttr("id"),
-  split(" "),
-  filter(Boolean),
-  map((id) => `#${id}`),
-  join("")
-);
+const extractAttr = (obj: HTMLElement, attr: string) => obj?.[attr] ?? "";
+export const extractClasses = (el: HTMLElement) =>
+  extractAttr(el, "className")
+    .split(" ")
+    .filter(Boolean)
+    .map((className) => `.${className}`)
+    .join("");
+export const extractIds = (el: HTMLElement) =>
+  extractAttr(el, "id")
+    .split(" ")
+    .filter(Boolean)
+    .map((id) => `#${id}`)
+    .join("");
 
 const eventToTargetPath = (event: BrowserEvent): EventTarget[] =>
   Array.from(event.composedPath()).reverse();
@@ -38,13 +29,14 @@ const targetPathToTrackerPath = (targetPath: EventTarget[]) => {
     .slice(htmlIndex, Infinity)
     .map(
       (el: HTMLElement) =>
-        extractAttr("nodeName")(el) + extractIds(el) + extractClasses(el)
+        extractAttr(el, "nodeName") + extractIds(el) + extractClasses(el)
     )
     .join(" ")
     .toLocaleLowerCase();
 };
 
-export const getTrackerPath = pipe(eventToTargetPath, targetPathToTrackerPath);
+export const getTrackerPath = (event: BrowserEvent) =>
+  targetPathToTrackerPath(eventToTargetPath(event));
 
 export const getWindowProps = (): WindowProps => {
   const { scrollX, scrollY } = window;
