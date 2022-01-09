@@ -23,7 +23,7 @@ const targetPathToTrackerPath = (targetPath: EventTarget[]) => {
     return String(nodeName).toLowerCase() === "html";
   });
 
-  if (htmlIndex === -1) return "";
+  if (htmlIndex === -1) return "html";
 
   return targetPath
     .slice(htmlIndex, Infinity)
