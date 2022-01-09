@@ -1,5 +1,5 @@
 import { UIWatcherEvent } from "../types";
-import { getWindowProps } from "../utils/common";
+import { getSessionId, getWindowProps } from "../utils/common";
 import { logEvent } from "../utils/logger";
 import { takeScreenshot } from "../utils/screenshot";
 
@@ -40,6 +40,7 @@ export class UITracker {
       path: "html",
       properties: { ...getWindowProps(), screenshot },
       timestamp: Date.now(),
+      sessionId: getSessionId(),
     };
   }
 }

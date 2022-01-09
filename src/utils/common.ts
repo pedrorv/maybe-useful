@@ -1,3 +1,4 @@
+import { v4 as uuid } from "uuid";
 import { BrowserEvent, WindowProps } from "../types";
 
 const extractAttr = (obj: HTMLElement, attr: string) => obj?.[attr] ?? "";
@@ -37,6 +38,9 @@ const targetPathToTrackerPath = (targetPath: EventTarget[]) => {
 
 export const getTrackerPath = (event: BrowserEvent) =>
   targetPathToTrackerPath(eventToTargetPath(event));
+
+let sessionId;
+export const getSessionId = () => (sessionId = sessionId ?? uuid());
 
 export const getWindowProps = (): WindowProps => {
   const { scrollX, scrollY } = window;
