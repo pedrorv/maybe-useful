@@ -34,7 +34,6 @@ export class KeyboardTracker {
       eventType: "keyboard",
       eventName: e.type,
       path: getTrackerPath(e),
-      window: getWindowProps(),
       properties: {
         altKey,
         code,

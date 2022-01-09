@@ -44,7 +44,6 @@ export class DragTracker {
       eventType: "drag",
       eventName: e.type,
       path: getTrackerPath(e),
-      window: getWindowProps(),
       properties: {
         altKey,
         button,

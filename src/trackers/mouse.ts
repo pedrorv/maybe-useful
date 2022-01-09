@@ -47,7 +47,6 @@ export class MouseTracker {
       eventType: "mouse",
       eventName: e.type,
       path: getTrackerPath(e),
-      window: getWindowProps(),
       properties: {
         altKey,
         button,

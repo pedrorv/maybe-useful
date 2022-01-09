@@ -37,9 +37,8 @@ export class UITracker {
     return {
       eventType: "ui",
       eventName,
-      path: "",
-      window: getWindowProps(),
-      properties: { screenshot },
+      path: "html",
+      properties: { ...getWindowProps(), screenshot },
       timestamp: Date.now(),
     };
   }
