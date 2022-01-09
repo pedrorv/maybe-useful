@@ -33,6 +33,7 @@ export class UITracker {
   ): Promise<UIWatcherEvent | null> {
     const screenshot = await takeScreenshot();
     const eventName = typeof e === "string" ? e : e.type;
+    if (!screenshot) return null;
 
     return {
       eventType: "ui",
