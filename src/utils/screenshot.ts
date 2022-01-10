@@ -6,12 +6,15 @@ export const takeScreenshot = async (): Promise<string | null> => {
       "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"
     );
 
-    const canvas = await (window as any)?.html2canvas(document.body, {
-      allowTaint: true,
-      foreignObjectRendering: true,
-    });
+    const canvas: HTMLCanvasElement = await (window as any)?.html2canvas(
+      document.body,
+      {
+        allowTaint: true,
+        foreignObjectRendering: true,
+      }
+    );
 
-    return canvas.toDataURL();
+    return canvas.toDataURL("image/webp", 0.9);
   } catch (e) {
     return null;
   }
