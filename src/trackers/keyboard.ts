@@ -31,8 +31,8 @@ export class KeyboardTracker {
     } = e as KeyboardEvent;
 
     return {
-      eventType: "keyboard",
-      eventName: e.type,
+      type: "keyboard",
+      name: e.type,
       path: getTrackerPath(e),
       properties: {
         altKey,

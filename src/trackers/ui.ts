@@ -32,12 +32,12 @@ export class UITracker {
     e: UIEvent | string
   ): Promise<UIWatcherEvent | null> {
     const screenshot = await takeScreenshot();
-    const eventName = typeof e === "string" ? e : e.type;
+    const name = typeof e === "string" ? e : e.type;
     if (!screenshot) return null;
 
     return {
-      eventType: "ui",
-      eventName,
+      type: "ui",
+      name,
       path: "html",
       properties: { ...getWindowProps(), screenshot },
       timestamp: Date.now(),

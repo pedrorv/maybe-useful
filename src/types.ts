@@ -53,8 +53,8 @@ export interface WindowProps {
 }
 
 interface BaseWatcherEvent<K, T> {
-  eventType: K;
-  eventName: string;
+  type: K;
+  name: string;
   sessionId: string;
   path: string;
   timestamp: number;

@@ -41,8 +41,8 @@ export class DragTracker {
     } = e as DragEvent;
 
     return {
-      eventType: "drag",
-      eventName: e.type,
+      type: "drag",
+      name: e.type,
       path: getTrackerPath(e),
       properties: {
         altKey,

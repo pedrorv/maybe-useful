@@ -7,18 +7,16 @@ const eventsByPath = {};
 
 events.forEach((event) => {
   if (!event.path) return;
-  if (!eventsByPath[event.eventType]) eventsByPath[event.eventType] = {};
-  if (!eventsByPath[event.eventType][event.eventName])
-    eventsByPath[event.eventType][event.eventName] = {};
-  eventsByPath[event.eventType][event.eventName][event.path] =
-    (eventsByPath[event.eventType][event.eventName][event.path] ?? 0) + 1;
+  if (!eventsByPath[event.type]) eventsByPath[event.type] = {};
+  if (!eventsByPath[event.type][event.name])
+    eventsByPath[event.type][event.name] = {};
+  eventsByPath[event.type][event.name][event.path] =
+    (eventsByPath[event.type][event.name][event.path] ?? 0) + 1;
 });
 
 const mouseEventsData = {};
 
-const mouseEvents = events.filter((e) =>
-  ["mouse", "drag"].includes(e.eventType)
-);
+const mouseEvents = events.filter((e) => ["mouse", "drag"].includes(e.type));
 
 mouseEvents.forEach((me) => {
   const key = `${me.properties.clientX}-${me.properties.clientY}`;

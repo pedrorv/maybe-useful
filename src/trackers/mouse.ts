@@ -44,8 +44,8 @@ export class MouseTracker {
     } = e as MouseEvent;
 
     return {
-      eventType: "mouse",
-      eventName: e.type,
+      type: "mouse",
+      name: e.type,
       path: getTrackerPath(e),
       properties: {
         altKey,

@@ -29,9 +29,9 @@ export const setupTrackers = () => {
   });
 
   [UITracker, DragTracker, KeyboardTracker, MouseTracker].forEach((tracker) =>
-    tracker.eventNames.forEach((eventName) => {
-      tracker.listenerElement.removeEventListener(eventName, tracker.track);
-      tracker.listenerElement.addEventListener(eventName, tracker.track);
+    tracker.eventNames.forEach((name) => {
+      tracker.listenerElement.removeEventListener(name, tracker.track);
+      tracker.listenerElement.addEventListener(name, tracker.track);
     })
   );
 };
