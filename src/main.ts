@@ -4,7 +4,7 @@ import {
   MouseTracker,
   UITracker,
 } from "./trackers";
-import { getEvents } from "./utils/logger";
+import { getEvents, clearEvents } from "./utils/logger";
 
 let domObserver;
 
@@ -28,7 +28,7 @@ export const setupTrackers = () => {
     subtree: true,
   });
 
-  [DragTracker, KeyboardTracker, MouseTracker, UITracker].forEach((tracker) =>
+  [UITracker, DragTracker, KeyboardTracker, MouseTracker].forEach((tracker) =>
     tracker.eventNames.forEach((eventName) => {
       tracker.listenerElement.removeEventListener(eventName, tracker.track);
       tracker.listenerElement.addEventListener(eventName, tracker.track);
@@ -36,8 +36,8 @@ export const setupTrackers = () => {
   );
 };
 
-export { getEvents };
+export { getEvents, clearEvents };
 
 if (window && window.addEventListener) {
-  window.addEventListener("load", setupTrackers);
+  window.addEventListener("DOMContentLoaded", setupTrackers);
 }
