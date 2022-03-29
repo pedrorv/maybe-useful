@@ -1,4 +1,4 @@
-import { v4 as uuid } from "uuid";
+import { uuid } from "../utils/uuid";
 import { BrowserEvent, WindowProps } from "../types";
 
 const extractAttr = (obj: HTMLElement, attr: string) => obj?.[attr] ?? "";
