@@ -35,5 +35,8 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "jest-environment-jsdom-fourteen"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1"
   }
 }

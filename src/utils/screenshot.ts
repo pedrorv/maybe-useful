@@ -1,18 +1,11 @@
-import { importFromCDN } from "./import";
+import html2canvas from "html2canvas";
 
 export const takeScreenshot = async (): Promise<string | null> => {
   try {
-    await importFromCDN(
-      "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"
-    );
-
-    const canvas: HTMLCanvasElement = await (window as any)?.html2canvas(
-      document.body,
-      {
-        allowTaint: true,
-        foreignObjectRendering: true,
-      }
-    );
+    const canvas: HTMLCanvasElement = await html2canvas(document.body, {
+      allowTaint: true,
+      foreignObjectRendering: true,
+    });
 
     return canvas.toDataURL("image/webp", 0.9);
   } catch (e) {
