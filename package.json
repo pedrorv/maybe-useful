@@ -37,6 +37,6 @@
     "testEnvironment": "jest-environment-jsdom-fourteen"
   },
   "dependencies": {
-    "html2canvas": "^1.4.1"
+    "html-to-image": "^1.9.0"
   }
 }

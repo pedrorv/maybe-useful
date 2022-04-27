@@ -1,10 +1,9 @@
-import html2canvas from "html2canvas";
+import { toCanvas } from "html-to-image";
 
 export const takeScreenshot = async (): Promise<string | null> => {
   try {
-    const canvas: HTMLCanvasElement = await html2canvas(document.body, {
-      allowTaint: true,
-      foreignObjectRendering: true,
+    const canvas = await toCanvas(document.body, {
+      backgroundColor: getComputedStyle(document.body).backgroundColor,
     });
 
     return canvas.toDataURL("image/webp", 0.9);
