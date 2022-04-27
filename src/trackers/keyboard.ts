@@ -1,5 +1,5 @@
 import { KeyboardWatcherEvent } from "../types";
-import { getSessionId, getTrackerPath } from "../utils/common";
+import { getAppId, getSessionId, getTrackerPath } from "../utils/common";
 import { logEvent } from "../utils/logger";
 
 export class KeyboardTracker {
@@ -47,6 +47,7 @@ export class KeyboardTracker {
       },
       timestamp: Date.now(),
       sessionId: getSessionId(),
+      appId: getAppId(),
     };
   }
 }

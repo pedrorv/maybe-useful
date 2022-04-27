@@ -1,5 +1,5 @@
 import { MouseWatcherEvent } from "../types";
-import { getSessionId, getTrackerPath } from "../utils/common";
+import { getAppId, getSessionId, getTrackerPath } from "../utils/common";
 import { logEvent } from "../utils/logger";
 
 export class MouseTracker {
@@ -62,6 +62,7 @@ export class MouseTracker {
       },
       timestamp: Date.now(),
       sessionId: getSessionId(),
+      appId: getAppId(),
     };
   }
 }

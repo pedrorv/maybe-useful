@@ -1,5 +1,7 @@
 import { MouseTracker } from "../src/trackers";
 import { clearEvents, getEvents } from "../src/utils/logger";
+import { init } from "../src/main";
+import { getAppId } from "../src/utils/common";
 
 describe("Tracker", () => {
   let clickSpy;
@@ -24,6 +26,12 @@ describe("Tracker", () => {
   afterEach(() => {
     jest.clearAllMocks();
     clearEvents();
+  });
+
+  it("should set the appId when initializing the library", () => {
+    init("test-app-id");
+
+    expect(getAppId()).toBe("test-app-id");
   });
 
   it("should trigger the click tracker", () => {

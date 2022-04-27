@@ -4,6 +4,7 @@ import {
   MouseTracker,
   UITracker,
 } from "./trackers";
+import { setAppId } from "./utils/common";
 
 let domObserver;
 
@@ -20,7 +21,9 @@ if (MutationObserver) {
   });
 }
 
-export const setupTrackers = () => {
+export const init = (appId: string) => {
+  setAppId(appId);
+
   domObserver?.disconnect();
   domObserver.observe(document.documentElement || document.body, {
     childList: true,
@@ -34,7 +37,3 @@ export const setupTrackers = () => {
     })
   );
 };
-
-if (window && window.addEventListener) {
-  window.addEventListener("DOMContentLoaded", setupTrackers);
-}

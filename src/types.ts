@@ -59,6 +59,7 @@ interface BaseWatcherEvent<K, T> {
   path: string;
   timestamp: number;
   properties: T;
+  appId: string;
 }
 
 export type DragWatcherEvent = BaseWatcherEvent<"drag", DragTrackerEventProps>;

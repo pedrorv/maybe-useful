@@ -1,5 +1,5 @@
 import { DragWatcherEvent } from "../types";
-import { getSessionId, getTrackerPath } from "../utils/common";
+import { getAppId, getSessionId, getTrackerPath } from "../utils/common";
 import { logEvent } from "../utils/logger";
 
 export class DragTracker {
@@ -59,6 +59,7 @@ export class DragTracker {
       },
       timestamp: Date.now(),
       sessionId: getSessionId(),
+      appId: getAppId(),
     };
   }
 }

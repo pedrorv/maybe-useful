@@ -42,6 +42,10 @@ export const getTrackerPath = (event: BrowserEvent) =>
 let sessionId;
 export const getSessionId = () => (sessionId = sessionId ?? uuid());
 
+let appId: string;
+export const getAppId = () => appId;
+export const setAppId = (id: string) => (appId ??= id);
+
 export const getWindowProps = (): WindowProps => {
   const { scrollX, scrollY } = window;
   const { origin, pathname } = window.location;
