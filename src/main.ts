@@ -10,9 +10,12 @@ let domObserver;
 if (MutationObserver) {
   domObserver = new MutationObserver((mutations: MutationRecord[]) => {
     mutations.forEach((m) => {
-      [...Array.from(m.addedNodes), ...Array.from(m.removedNodes)].forEach(
-        UITracker.trackDOMChange
-      );
+      const hasAlteredVisualElements = !![
+        ...Array.from(m.addedNodes),
+        ...Array.from(m.removedNodes),
+      ].filter((node) => node.nodeName !== "SCRIPT");
+
+      if (hasAlteredVisualElements) UITracker.trackDOMChange();
     });
   });
 }
