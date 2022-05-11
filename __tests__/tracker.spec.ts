@@ -1,7 +1,7 @@
 import { MouseTracker } from "../src/trackers";
 import { clearEvents, getEvents } from "../src/utils/logger";
 import { init } from "../src/main";
-import { getAppId } from "../src/utils/common";
+import { getAppId, getServerUrl } from "../src/utils/common";
 
 describe("Tracker", () => {
   let clickSpy;
@@ -29,9 +29,15 @@ describe("Tracker", () => {
   });
 
   it("should set the appId when initializing the library", () => {
-    init("test-app-id");
+    init("test-app-id", "http://localhost:3000");
 
     expect(getAppId()).toBe("test-app-id");
+  });
+
+  it("should set the serverUrl when initializing the library", () => {
+    init("test-app-id", "http://localhost:3000");
+
+    expect(getServerUrl()).toBe("http://localhost:3000");
   });
 
   it("should trigger the click tracker", () => {
