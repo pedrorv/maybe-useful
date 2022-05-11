@@ -46,6 +46,10 @@ let appId: string;
 export const getAppId = () => appId;
 export const setAppId = (id: string) => (appId ??= id);
 
+let serverUrl: string;
+export const getServerUrl = () => serverUrl;
+export const setServerUrl = (serverUrl: string) => (serverUrl ??= serverUrl);
+
 export const getWindowProps = (): WindowProps => {
   const { scrollX, scrollY } = window;
   const { origin, pathname } = window.location;

@@ -4,25 +4,25 @@ import {
   MouseTracker,
   UITracker,
 } from "./trackers";
-import { setAppId } from "./utils/common";
+import { setAppId, setServerUrl } from "./utils/common";
 
-let domObserver;
-
-if (MutationObserver) {
-  domObserver = new MutationObserver((mutations: MutationRecord[]) => {
-    mutations.forEach((m) => {
-      const hasAlteredVisualElements = !![
-        ...Array.from(m.addedNodes),
-        ...Array.from(m.removedNodes),
-      ].filter((node) => node.nodeName !== "SCRIPT");
-
-      if (hasAlteredVisualElements) UITracker.trackDOMChange();
-    });
-  });
-}
-
-export const init = (appId: string) => {
+export const init = (appId: string, serverUrl: string) => {
   setAppId(appId);
+  setServerUrl(serverUrl);
+
+  let domObserver;
+  if (MutationObserver) {
+    domObserver = new MutationObserver((mutations: MutationRecord[]) => {
+      mutations.forEach((m) => {
+        const hasAlteredVisualElements = !![
+          ...Array.from(m.addedNodes),
+          ...Array.from(m.removedNodes),
+        ].filter((node) => node.nodeName !== "SCRIPT");
+
+        if (hasAlteredVisualElements) UITracker.trackDOMChange();
+      });
+    });
+  }
 
   domObserver?.disconnect();
   domObserver.observe(document.documentElement || document.body, {

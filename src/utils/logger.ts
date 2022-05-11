@@ -1,3 +1,5 @@
+import { getServerUrl } from "./common";
+
 const events: any[] = [];
 
 let sending = false;
@@ -8,7 +10,7 @@ setInterval(async () => {
 
   try {
     sending = true;
-    const response = await fetch("http://localhost:3000/events", {
+    const response = await fetch(`${getServerUrl()}/events`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
