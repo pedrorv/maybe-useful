@@ -1,6 +1,7 @@
+import { WatcherEvent } from "../types";
 import { getServerUrl } from "./common";
 
-const events: any[] = [];
+const events: WatcherEvent[] = [];
 
 let sending = false;
 setInterval(async () => {
@@ -28,7 +29,7 @@ setInterval(async () => {
   }
 }, 300);
 
-export const logEvent = (e: any): void => {
+export const logEvent = (e: WatcherEvent): void => {
   events.push(e);
 };
 
