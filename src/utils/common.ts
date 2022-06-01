@@ -1,7 +1,10 @@
 import { uuid } from "../utils/uuid";
 import { BrowserEvent, WindowProps } from "../types";
 
-const extractAttr = (obj: HTMLElement, attr: string) => obj?.[attr] ?? "";
+const extractAttr = (obj: HTMLElement, attr: string) => {
+  const attrVal = obj?.[attr];
+  return typeof attrVal === "string" ? attrVal : "";
+};
 export const extractClasses = (el: HTMLElement) =>
   extractAttr(el, "className")
     .split(" ")
