@@ -71,15 +71,19 @@ const handleElmCss = (
     let classStr = `${context.options.prefixForNewGeneratedClasses}0 `;
     const computedStyle = getComputedStyle(domElm);
     const isRootHTML = domElm.tagName === "HTML";
+
     for (let i = 0; i < computedStyle.length; i++) {
       const property = computedStyle.item(i);
       const value = computedStyle.getPropertyValue(property);
       const isZoom = property === "zoom";
+
       if (value !== context.baseClass.get(property)) {
-        const mapKey =
-          property +
-          ":" +
-          (isRootHTML && isZoom ? +value / window.devicePixelRatio : value);
+        let mapKey = `${property}:${value}`;
+
+        if (isRootHTML && isZoom && value !== "1") {
+          mapKey = `${property}:${+value / window.devicePixelRatio}`;
+        }
+
         let className: string = context.classMap.get(mapKey) || "";
         if (!className) {
           context.classCount++;
