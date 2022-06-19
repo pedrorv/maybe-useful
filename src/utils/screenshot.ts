@@ -1,13 +1,8 @@
-import { toCanvas } from "html-to-image";
+import { OutputType, capture } from "../packages";
 
-export const takeScreenshot = async (): Promise<string | null> => {
+export const takeScreenshot = (): string | null => {
   try {
-    const canvas = await toCanvas(document.body, {
-      backgroundColor: getComputedStyle(document.body).backgroundColor,
-      fontEmbedCSS: "",
-    });
-
-    return canvas.toDataURL("image/webp", 0.9);
+    return capture(OutputType.STRING, document) as string;
   } catch (e) {
     return null;
   }
