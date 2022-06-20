@@ -412,9 +412,7 @@ export const goCapture: CaptureFunction = (
     const newHtmlObject = getHtmlObject(context);
     output = prepareOutput(newHtmlObject, outputType || OutputType.OBJECT);
   } catch (ex: any) {
-    console.error(`goCapture() - error - ${ex.message}`);
-  } finally {
-    console.info(`goCapture() - end - ${new Date().getTime() - startTime}ms`);
+    console.error(`capture error - ${ex.message}`);
   }
   return output;
 };
