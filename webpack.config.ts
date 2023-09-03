@@ -1,5 +1,6 @@
 import * as path from "path";
 import * as webpack from "webpack";
+import "webpack-dev-server";
 
 const isProd = process.env.NODE_ENV === "production";
 
