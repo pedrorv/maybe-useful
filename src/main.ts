@@ -17,15 +17,14 @@ export const init = (appId: string, serverUrl: string) => {
         const hasAlteredVisualElements = !![
           ...Array.from(m.addedNodes),
           ...Array.from(m.removedNodes),
-        ].filter((node) => node.nodeName !== "SCRIPT");
-
+        ].filter((node) => node.nodeName !== "SCRIPT").length;
         if (hasAlteredVisualElements) UITracker.trackDOMChange();
       });
     });
   }
 
   domObserver?.disconnect();
-  domObserver.observe(document.documentElement || document.body, {
+  domObserver?.observe(document.documentElement || document.body, {
     childList: true,
     subtree: true,
   });

@@ -3,10 +3,19 @@ import { clearEvents, getEvents } from "../src/utils/logger";
 import { init } from "../src/main";
 import { getAppId, getServerUrl } from "../src/utils/common";
 
+class MockMutationObserver implements MutationObserver {
+  disconnect() {}
+  observe() {}
+  takeRecords(): MutationRecord[] {
+    return [];
+  }
+}
+
 describe("Tracker", () => {
   let clickSpy;
 
   beforeEach(() => {
+    global.MutationObserver = MockMutationObserver;
     document.body.innerHTML = `
         <div class="outer">
           <div id="middle" class="middle">
@@ -28,15 +37,10 @@ describe("Tracker", () => {
     clearEvents();
   });
 
-  it("should set the appId when initializing the library", () => {
+  it("should set the appId and serverUrl when initializing the library", () => {
     init("test-app-id", "http://localhost:3000");
 
     expect(getAppId()).toBe("test-app-id");
-  });
-
-  it("should set the serverUrl when initializing the library", () => {
-    init("test-app-id", "http://localhost:3000");
-
     expect(getServerUrl()).toBe("http://localhost:3000");
   });
 
