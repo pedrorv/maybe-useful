@@ -18,6 +18,9 @@ const config: webpack.Configuration = {
   },
   devtool: isProd ? undefined : "inline-source-map",
   resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
     extensions: [".wasm", ".mjs", ".js", ".jsx", ".ts", ".tsx", ".json"],
   },
   output: {
