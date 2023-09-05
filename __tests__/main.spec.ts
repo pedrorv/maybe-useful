@@ -3,19 +3,10 @@ import { clearEvents, getEvents } from "../src/utils/logger";
 import { init } from "../src/main";
 import { getAppId, getServerUrl } from "../src/utils/common";
 
-class MockMutationObserver implements MutationObserver {
-  disconnect() {}
-  observe() {}
-  takeRecords(): MutationRecord[] {
-    return [];
-  }
-}
-
-describe("Tracker", () => {
+describe("Main", () => {
   let clickSpy;
 
   beforeEach(() => {
-    global.MutationObserver = MockMutationObserver;
     document.body.innerHTML = `
         <div class="outer">
           <div id="middle" class="middle">
