@@ -7,13 +7,12 @@ export class MouseTracker {
     return [
       "click",
       "dblclick",
+      "contextmenu",
+      "mouseup",
       "mousedown",
       "mouseenter",
       "mouseleave",
       "mousemove",
-      "mouseout",
-      "mouseup",
-      "select",
       "wheel",
     ];
   }

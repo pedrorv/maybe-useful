@@ -4,7 +4,7 @@ import { logEvent } from "../utils/logger";
 
 export class KeyboardTracker {
   static get eventNames(): string[] {
-    return ["keydown", "keypress", "keyup"];
+    return ["keydown", "keyup", "keypress"];
   }
 
   static get listenerElement() {
