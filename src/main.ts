@@ -3,14 +3,14 @@ import {
   KeyboardTracker,
   MouseTracker,
   UITracker,
-} from "./trackers";
-import { setAppId, setServerUrl } from "./utils/common";
+} from "@/trackers";
+import { setAppId, setServerUrl } from "@/utils/common";
 
+let domObserver;
 export const init = (appId: string, serverUrl: string) => {
   setAppId(appId);
   setServerUrl(serverUrl);
 
-  let domObserver;
   if (MutationObserver) {
     domObserver = new MutationObserver((mutations: MutationRecord[]) => {
       mutations.forEach((m) => {
@@ -33,6 +33,15 @@ export const init = (appId: string, serverUrl: string) => {
     tracker.eventNames.forEach((name) => {
       tracker.listenerElement.removeEventListener(name, tracker.track);
       tracker.listenerElement.addEventListener(name, tracker.track);
+    })
+  );
+};
+
+export const stop = () => {
+  domObserver?.disconnect();
+  [UITracker, DragTracker, KeyboardTracker, MouseTracker].forEach((tracker) =>
+    tracker.eventNames.forEach((name) => {
+      tracker.listenerElement.removeEventListener(name, tracker.track);
     })
   );
 };
