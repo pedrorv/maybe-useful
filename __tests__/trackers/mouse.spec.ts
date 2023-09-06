@@ -38,7 +38,7 @@ describe("MouseTracker", () => {
     expect(getEvents().length).toEqual(1);
   });
 
-  it("should return the event path with ids and classes", () => {
+  it("should log the click with proper structure", () => {
     document.body.innerHTML = `
         <div class="outer">
           <div id="middle" class="middle">
@@ -49,9 +49,26 @@ describe("MouseTracker", () => {
 
     (document.querySelector("div.inner") as HTMLElement).click();
 
-    expect(getEvents()[0].path).toEqual(
-      "html body div.outer div#middle.middle div#inner#super-inner.inner.super-inner"
-    );
+    expect(getEvents()[0]).toMatchObject({
+      type: "mouse",
+      name: "click",
+      path: "html body div.outer div#middle.middle div#inner#super-inner.inner.super-inner",
+      properties: {
+        altKey: expect.any(Boolean),
+        button: expect.any(Number),
+        clientX: expect.any(Number),
+        clientY: expect.any(Number),
+        ctrlKey: expect.any(Boolean),
+        metaKey: expect.any(Boolean),
+        movementX: undefined,
+        movementY: undefined,
+        screenX: expect.any(Number),
+        screenY: expect.any(Number),
+        shiftKey: expect.any(Boolean),
+      },
+      timestamp: expect.any(Number),
+      sessionId: expect.any(String),
+    });
   });
 
   it("should log events", () => {
