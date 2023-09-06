@@ -1,98 +1,72 @@
-import { MouseTracker } from "../src/trackers";
-import { clearEvents, getEvents } from "../src/utils/logger";
-import { init } from "../src/main";
-import { getAppId, getServerUrl } from "../src/utils/common";
+import * as trackers from "@/trackers";
+import { clearEvents } from "@/utils/logger";
+import { init, stop } from "@/main";
+import { getAppId, getServerUrl } from "@/utils/common";
+
+const TOTAL_DOCUMENT_EVENTS = Object.keys(trackers)
+  .filter((trackerName) => trackers[trackerName].listenerElement === document)
+  .reduce(
+    (acc, trackerName) => acc + trackers[trackerName].eventNames.length,
+    0
+  );
+const TOTAL_WINDOW_EVENTS = Object.keys(trackers)
+  .filter((trackerName) => trackers[trackerName].listenerElement === window)
+  .reduce(
+    (acc, trackerName) => acc + trackers[trackerName].eventNames.length,
+    0
+  );
 
 describe("Main", () => {
-  let clickSpy;
-
-  beforeEach(() => {
-    document.body.innerHTML = `
-        <div class="outer">
-          <div id="middle" class="middle">
-            <div class="inner super-inner">Inner Text</div>
-          </div>
-        </div>
-      `;
-
-    // @ts-ignore
-    window.screen.orientation = { type: "" };
-
-    clickSpy = jest.spyOn(MouseTracker, "track");
-
-    document.addEventListener("click", clickSpy);
-  });
-
   afterEach(() => {
     jest.clearAllMocks();
     clearEvents();
+    stop();
   });
 
-  it("should set the appId and serverUrl when initializing the library", () => {
-    init("test-app-id", "http://localhost:3000");
+  describe("init", () => {
+    it("should set the appId and serverUrl when initializing the library", () => {
+      init("test-app-id", "http://localhost:3000");
 
-    expect(getAppId()).toBe("test-app-id");
-    expect(getServerUrl()).toBe("http://localhost:3000");
+      expect(getAppId()).toBe("test-app-id");
+      expect(getServerUrl()).toBe("http://localhost:3000");
+    });
+
+    it("should set the listeners", () => {
+      document.addEventListener = jest.fn();
+      document.removeEventListener = jest.fn();
+      window.addEventListener = jest.fn();
+      window.removeEventListener = jest.fn();
+
+      init("test-app-id", "http://localhost:3000");
+
+      expect(document.removeEventListener).toHaveBeenCalledTimes(
+        TOTAL_DOCUMENT_EVENTS
+      );
+      expect(document.addEventListener).toHaveBeenCalledTimes(
+        TOTAL_DOCUMENT_EVENTS
+      );
+      expect(window.removeEventListener).toHaveBeenCalledTimes(
+        TOTAL_WINDOW_EVENTS
+      );
+      expect(window.addEventListener).toHaveBeenCalledTimes(
+        TOTAL_WINDOW_EVENTS
+      );
+    });
   });
 
-  it("should trigger the click tracker", () => {
-    (document.querySelector("div.outer") as HTMLElement).click();
+  describe("stop", () => {
+    it("should stop remove the listeners", () => {
+      document.removeEventListener = jest.fn();
+      window.removeEventListener = jest.fn();
 
-    expect(clickSpy).toHaveBeenCalledTimes(1);
+      stop();
 
-    (document.querySelector("div#middle") as HTMLElement).click();
-
-    expect(clickSpy).toHaveBeenCalledTimes(2);
-
-    (document.querySelector("div.inner") as HTMLElement).click();
-
-    expect(clickSpy).toHaveBeenCalledTimes(3);
-  });
-
-  it("should trigger the click tracker even if the dom gets changed after the event listener is added", () => {
-    document.body.innerHTML = `
-        <div class="outer-new"></div>
-      `;
-
-    (document.querySelector("div.outer-new") as HTMLElement).click();
-
-    expect(clickSpy).toHaveBeenCalledTimes(1);
-  });
-
-  it("should return the event path with ids and classes", () => {
-    document.body.innerHTML = `
-        <div class="outer">
-          <div id="middle" class="middle">
-            <div id="inner super-inner" class="inner super-inner">Inner Text</div>
-          </div>
-        </div>
-      `;
-
-    (document.querySelector("div.inner") as HTMLElement).click();
-
-    const returnValue = clickSpy.mock.results[0].value;
-
-    expect(returnValue.path).toEqual(
-      "html body div.outer div#middle.middle div#inner#super-inner.inner.super-inner"
-    );
-  });
-
-  it("should log events", () => {
-    document.body.innerHTML = `<div class="log"></div>`;
-
-    (document.querySelector("div.log") as HTMLElement).click();
-    (document.querySelector("div.log") as HTMLElement).click();
-    (document.querySelector("div.log") as HTMLElement).click();
-
-    expect(getEvents().length).toEqual(3);
-  });
-
-  it("should clear logged events", () => {
-    document.body.innerHTML = `<div class="log"></div>`;
-
-    (document.querySelector("div.log") as HTMLElement).click();
-    clearEvents();
-
-    expect(getEvents().length).toEqual(0);
+      expect(document.removeEventListener).toHaveBeenCalledTimes(
+        TOTAL_DOCUMENT_EVENTS
+      );
+      expect(window.removeEventListener).toHaveBeenCalledTimes(
+        TOTAL_WINDOW_EVENTS
+      );
+    });
   });
 });

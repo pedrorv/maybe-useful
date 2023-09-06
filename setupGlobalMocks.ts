@@ -7,3 +7,6 @@ class MockMutationObserver implements MutationObserver {
 }
 
 global.MutationObserver = MockMutationObserver;
+
+// @ts-ignore
+global.window.screen.orientation = { type: "" };
