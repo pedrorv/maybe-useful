@@ -3,6 +3,8 @@ import { getAppId, getSessionId, getWindowProps } from "../utils/common";
 import { logEvent } from "../utils/logger";
 import { takeScreenshot } from "../utils/screenshot";
 
+let isTakingScreenshot = false;
+
 export class UITracker {
   static get eventNames(): string[] {
     return ["resize", "scroll"];
@@ -31,8 +33,11 @@ export class UITracker {
   private static async toWatcherEvent(
     e: UIEvent | string
   ): Promise<UIWatcherEvent | null> {
+    if (isTakingScreenshot) return null;
+    isTakingScreenshot = true;
     const screenshot = await takeScreenshot();
     const name = typeof e === "string" ? e : e.type;
+    isTakingScreenshot = false;
     if (!screenshot) return null;
 
     return {

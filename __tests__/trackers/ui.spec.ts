@@ -1,5 +1,5 @@
 import { UITracker } from "@/trackers";
-import { clearEvents } from "@/utils/logger";
+import { getEvents, clearEvents } from "@/utils/logger";
 import { init, stop } from "@/main";
 
 describe("UITracker", () => {
@@ -64,5 +64,17 @@ describe("UITracker", () => {
       timestamp: expect.any(Number),
       sessionId: expect.any(String),
     });
+  });
+
+  it(`shouldn't run multiple DOM track events at the same time`, async () => {
+    await Promise.all([
+      UITracker.trackDOMChange(),
+      UITracker.trackDOMChange(),
+      UITracker.trackDOMChange(),
+      UITracker.trackDOMChange(),
+      UITracker.trackDOMChange(),
+    ]);
+
+    expect(getEvents().length).toBe(1);
   });
 });
