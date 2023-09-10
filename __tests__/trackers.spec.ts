@@ -11,9 +11,6 @@ describe("Trackers", () => {
         </div>
       `;
 
-    // @ts-ignore
-    window.screen.orientation = { type: "" };
-
     for (const trackerKey in trackers) {
       jest.spyOn(trackers[trackerKey], "track");
     }
