@@ -1,5 +1,4 @@
 import { CaptureFunction, OutputType } from "./types";
-import { base64Encode, uriEncode } from "./encoder";
 
 interface CaptureContext {
   isBody: boolean;
@@ -363,10 +362,10 @@ const prepareOutput = (
         output = outerHtml;
       } else if (outputType === "uri") {
         //support for a deprecated value
-        output = uriEncode(outerHtml);
+        output = (outerHtml ? encodeURI(outerHtml) : "") || "";
       } else if (outputType === "base64") {
         //support for a deprecated value
-        output = base64Encode(outerHtml);
+        output = btoa(outerHtml);
       }
     }
     output = output || "";
