@@ -158,7 +158,7 @@ const handleInputElement = (
   const domType = domElm.getAttribute("type");
   if (
     domElm instanceof HTMLInputElement &&
-    (domType === "checkbox" || domType === "radio")
+    (domType === "checkbox" || domType === "radio" || domType === "checkBox")
   ) {
     if (domElm.checked) {
       (newElm as HTMLInputElement).setAttribute("checked", "checked");
