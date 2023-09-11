@@ -6,6 +6,8 @@ import {
 } from "@/trackers";
 import { setAppId, setServerUrl } from "@/utils/common";
 
+const TRACKERS = [UITracker, DragTracker, KeyboardTracker, MouseTracker];
+
 let domObserver;
 export const init = (appId: string, serverUrl: string) => {
   setAppId(appId);
@@ -29,7 +31,7 @@ export const init = (appId: string, serverUrl: string) => {
     subtree: true,
   });
 
-  [UITracker, DragTracker, KeyboardTracker, MouseTracker].forEach((tracker) =>
+  TRACKERS.forEach((tracker) =>
     tracker.eventNames.forEach((name) => {
       tracker.listenerElement.removeEventListener(name, tracker.track);
       tracker.listenerElement.addEventListener(name, tracker.track);
@@ -39,7 +41,7 @@ export const init = (appId: string, serverUrl: string) => {
 
 export const stop = () => {
   domObserver?.disconnect();
-  [UITracker, DragTracker, KeyboardTracker, MouseTracker].forEach((tracker) =>
+  TRACKERS.forEach((tracker) =>
     tracker.eventNames.forEach((name) => {
       tracker.listenerElement.removeEventListener(name, tracker.track);
     })
