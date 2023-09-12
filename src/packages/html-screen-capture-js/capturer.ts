@@ -121,7 +121,8 @@ const handleElmCss = (
 
 const getCanvasDataUrl = (
   context: CaptureContext,
-  domElm: HTMLImageElement | HTMLCanvasElement
+  domElm: HTMLImageElement | HTMLCanvasElement,
+  corsFallback = false
 ): string => {
   let canvasDataUrl = "";
   try {
@@ -136,6 +137,9 @@ const getCanvasDataUrl = (
       domElm instanceof HTMLImageElement
         ? domElm.naturalHeight
         : domElm.offsetHeight;
+    if (domElm instanceof HTMLImageElement && corsFallback) {
+      domElm.crossOrigin = "Anonymous";
+    }
     const ctx = context.canvas.getContext("2d");
     if (ctx) {
       ctx.drawImage(domElm, 0, 0);
@@ -145,6 +149,9 @@ const getCanvasDataUrl = (
       context.options.imageQualityForDataUrl
     );
   } catch (ex: any) {
+    if (ex.message?.includes?.("Tainted canvases may not be exported")) {
+      return getCanvasDataUrl(context, domElm, true);
+    }
     console.warn(`getCanvasDataUrl() - ${ex.message}`);
   }
   return canvasDataUrl;
@@ -359,7 +366,7 @@ const prepareOutput = (
     const outerHtml = (newHtmlObject ? newHtmlObject.outerHTML : "") || "";
     if (outerHtml) {
       if (outputType === OutputType.STRING) {
-        output = outerHtml;
+        output = outerHtml.replace(/(?:\r\n|\r|\n)/g, "");
       } else if (outputType === "uri") {
         //support for a deprecated value
         output = (outerHtml ? encodeURI(outerHtml) : "") || "";
