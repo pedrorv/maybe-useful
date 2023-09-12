@@ -33,21 +33,26 @@ export class UITracker {
   private static async toWatcherEvent(
     e: UIEvent | string
   ): Promise<UIWatcherEvent | null> {
-    if (isTakingScreenshot) return null;
-    isTakingScreenshot = true;
-    const screenshot = await takeScreenshot();
-    const name = typeof e === "string" ? e : e.type;
-    isTakingScreenshot = false;
-    if (!screenshot) return null;
+    try {
+      if (isTakingScreenshot) return null;
+      isTakingScreenshot = true;
+      const screenshot = await takeScreenshot();
+      const name = typeof e === "string" ? e : e.type;
+      isTakingScreenshot = false;
+      if (!screenshot) return null;
 
-    return {
-      type: "ui",
-      name,
-      path: "html",
-      properties: { ...getWindowProps(), screenshot },
-      timestamp: Date.now(),
-      sessionId: getSessionId(),
-      appId: getAppId(),
-    };
+      return {
+        type: "ui",
+        name,
+        path: "html",
+        properties: { ...getWindowProps(), screenshot },
+        timestamp: Date.now(),
+        sessionId: getSessionId(),
+        appId: getAppId(),
+      };
+    } catch (e) {
+      isTakingScreenshot = false;
+      return null;
+    }
   }
 }
