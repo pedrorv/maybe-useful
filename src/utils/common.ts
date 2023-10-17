@@ -58,12 +58,14 @@ export const getDryRun = () => dryRun;
 export const setDryRun = (isDryRun: boolean) => (dryRun ??= isDryRun);
 
 export const getWindowProps = (): WindowProps => {
-  const { scrollX, scrollY } = window;
+  const { scrollX, scrollY, innerWidth, innerHeight } = window;
   const { origin, pathname } = window.location;
   const { availHeight, availWidth, height, width } = window.screen;
   const orientation = window.screen.orientation.type;
 
   return {
+    innerWidth,
+    innerHeight,
     scrollX,
     scrollY,
     screen: {
