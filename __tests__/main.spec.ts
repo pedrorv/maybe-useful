@@ -25,7 +25,7 @@ describe("Main", () => {
 
   describe("init", () => {
     it("should set the appId and serverUrl when initializing the library", () => {
-      init("test-app-id", "http://localhost:3000");
+      init("test-app-id", "http://localhost:3000", true);
 
       expect(getAppId()).toBe("test-app-id");
       expect(getServerUrl()).toBe("http://localhost:3000");
@@ -37,7 +37,7 @@ describe("Main", () => {
       window.addEventListener = jest.fn();
       window.removeEventListener = jest.fn();
 
-      init("test-app-id", "http://localhost:3000");
+      init("test-app-id", "http://localhost:3000", true);
 
       expect(document.removeEventListener).toHaveBeenCalledTimes(
         TOTAL_DOCUMENT_EVENTS

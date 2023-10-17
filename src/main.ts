@@ -4,14 +4,20 @@ import {
   MouseTracker,
   UITracker,
 } from "@/trackers";
-import { setAppId, setServerUrl } from "@/utils/common";
+import { setAppId, setDryRun, setServerUrl } from "@/utils/common";
+export { getEvents } from "@/utils/logger";
 
 const TRACKERS = [UITracker, DragTracker, KeyboardTracker, MouseTracker];
 
 let domObserver;
-export const init = (appId: string, serverUrl: string) => {
+export const init = async (
+  appId: string,
+  serverUrl: string,
+  isDryRun = false
+) => {
   setAppId(appId);
   setServerUrl(serverUrl);
+  setDryRun(isDryRun);
 
   if (MutationObserver) {
     domObserver = new MutationObserver((mutations: MutationRecord[]) => {
@@ -31,6 +37,7 @@ export const init = (appId: string, serverUrl: string) => {
     subtree: true,
   });
 
+  if (!isDryRun) await UITracker.trackDOMChange();
   TRACKERS.forEach((tracker) =>
     tracker.eventNames.forEach((name) => {
       tracker.listenerElement.removeEventListener(name, tracker.track);

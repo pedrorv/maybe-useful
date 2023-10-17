@@ -1,8 +1,10 @@
+import { setDryRun } from "@/utils/common";
 import { clearEvents, getEvents, logEvent } from "@/utils/logger";
 
 describe("Logger", () => {
   beforeEach(() => {
     clearEvents();
+    setDryRun(true);
   });
 
   it("logs an event", () => {

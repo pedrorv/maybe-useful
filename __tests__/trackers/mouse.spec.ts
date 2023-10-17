@@ -3,7 +3,7 @@ import { init, stop } from "@/main";
 
 describe("MouseTracker", () => {
   beforeEach(() => {
-    init("test-app-id", "http://localhost:3000");
+    init("test-app-id", "http://localhost:3000", true);
   });
 
   afterEach(() => {

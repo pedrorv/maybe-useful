@@ -4,7 +4,7 @@ import { init, stop } from "@/main";
 
 describe("UITracker", () => {
   beforeEach(() => {
-    init("test-app-id", "http://localhost:3000");
+    init("test-app-id", "http://localhost:3000", true);
   });
 
   afterEach(() => {

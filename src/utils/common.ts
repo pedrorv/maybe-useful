@@ -53,6 +53,10 @@ let serverUrl: string;
 export const getServerUrl = () => serverUrl;
 export const setServerUrl = (url: string) => (serverUrl ??= url);
 
+let dryRun: boolean;
+export const getDryRun = () => dryRun;
+export const setDryRun = (isDryRun: boolean) => (dryRun ??= isDryRun);
+
 export const getWindowProps = (): WindowProps => {
   const { scrollX, scrollY } = window;
   const { origin, pathname } = window.location;

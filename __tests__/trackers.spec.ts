@@ -15,7 +15,7 @@ describe("Trackers", () => {
       jest.spyOn(trackers[trackerKey], "track");
     }
 
-    init("test-app-id", "http://localhost:3000");
+    init("test-app-id", "http://localhost:3000", true);
   });
 
   afterEach(() => {

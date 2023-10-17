@@ -1,36 +1,22 @@
 import { WatcherEvent } from "../types";
-import { getServerUrl } from "./common";
+import { getServerUrl, getDryRun } from "./common";
 
 const events: WatcherEvent[] = [];
 
-let sending = false;
-setInterval(async () => {
-  if (sending) return;
-  const eventsToSend = events.splice(0, 20);
-  if (!eventsToSend.length) return;
-
-  try {
-    sending = true;
-    const response = await fetch(`${getServerUrl()}/events`, {
+export const logEvent = (e: WatcherEvent): void => {
+  if (getDryRun()) {
+    events.push(e);
+  } else {
+    fetch(`${getServerUrl()}/events`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(eventsToSend),
-    }).then((res) => res.json());
-
-    if (response.error) {
-      events.push(...eventsToSend);
-    }
-  } catch (e) {
-    events.push(...eventsToSend);
-  } finally {
-    sending = false;
+      body: JSON.stringify(e),
+    })
+      .then(() => {})
+      .catch(() => {});
   }
-}, 300);
-
-export const logEvent = (e: WatcherEvent): void => {
-  events.push(e);
 };
 
 export const getEvents = () => [...events];
