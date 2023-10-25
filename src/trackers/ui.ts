@@ -1,45 +1,43 @@
 import { UIWatcherEvent } from "../types";
-import { getAppId, getSessionId, getWindowProps } from "../utils/common";
+import {
+  getAppId,
+  getDryRun,
+  getSessionId,
+  getWindowProps,
+} from "../utils/common";
 import { logEvent } from "../utils/logger";
 import { takeScreenshot } from "../utils/screenshot";
 
 let isTakingScreenshot = false;
+let previousScreenshot;
 
 export class UITracker {
   static get eventNames(): string[] {
-    return ["resize", "scroll"];
+    return [];
   }
 
   static get listenerElement() {
     return window;
   }
 
-  private static async trackBase(e: UIEvent | string) {
-    const event = await UITracker.toWatcherEvent(e);
+  static async track(): Promise<UIWatcherEvent | null> {
+    const event = await UITracker.toWatcherEvent("dom-change");
     if (!event) return null;
 
     logEvent(event);
     return event;
   }
 
-  static async track(e: UIEvent): Promise<UIWatcherEvent | null> {
-    return UITracker.trackBase(e);
-  }
-
-  static async trackDOMChange() {
-    return UITracker.trackBase("dom-change");
-  }
-
   private static async toWatcherEvent(
-    e: UIEvent | string
+    name: string
   ): Promise<UIWatcherEvent | null> {
+    let screenshot;
     try {
       if (isTakingScreenshot) return null;
       isTakingScreenshot = true;
-      const screenshot = await takeScreenshot();
-      const name = typeof e === "string" ? e : e.type;
-      isTakingScreenshot = false;
+      screenshot = await takeScreenshot();
       if (!screenshot) return null;
+      if (previousScreenshot === screenshot && !getDryRun()) return null;
 
       return {
         type: "ui",
@@ -51,8 +49,10 @@ export class UITracker {
         appId: getAppId(),
       };
     } catch (e) {
-      isTakingScreenshot = false;
       return null;
+    } finally {
+      previousScreenshot = screenshot;
+      isTakingScreenshot = false;
     }
   }
 }

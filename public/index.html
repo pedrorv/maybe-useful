@@ -231,6 +231,13 @@
       for (var i = 0; i < completedTasksHolder.children.length; i++) {
         bindTaskEvents(completedTasksHolder.children[i], taskIncomplete);
       }
+
+      window.onload = () =>
+        watcher.init(
+          "ebf05be7-d3fe-4df3-a789-0a641747d7a2",
+          "http://localhost:3000",
+          true
+        );
     </script>
     <script src="watcher.js"></script>
   </body>

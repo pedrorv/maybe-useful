@@ -1,8 +1,8 @@
-import { UITracker } from "@/trackers";
-import { getEvents, clearEvents } from "@/utils/logger";
+import { WindowTracker } from "@/trackers";
+import { clearEvents } from "@/utils/logger";
 import { init, stop } from "@/main";
 
-describe("UITracker", () => {
+describe("WindowTracker", () => {
   beforeEach(() => {
     init("test-app-id", "http://localhost:3000", true);
   });
@@ -13,12 +13,15 @@ describe("UITracker", () => {
     stop();
   });
 
-  it('should be able to "screenshot" the dom', async () => {
-    const event = await UITracker.track();
+  it("should return the resize event with proper structure", () => {
+    const uiEvent = new UIEvent("resize", {
+      bubbles: true,
+    });
+    const event = WindowTracker.track(uiEvent);
 
     expect(event).toMatchObject({
-      type: "ui",
-      name: "dom-change",
+      type: "window",
+      name: "resize",
       path: "html",
       properties: {
         scrollX: expect.any(Number),
@@ -31,16 +34,9 @@ describe("UITracker", () => {
           orientation: expect.any(String),
         },
         location: { origin: expect.any(String), pathname: expect.any(String) },
-        screenshot: expect.stringContaining("</html>"),
       },
       timestamp: expect.any(Number),
       sessionId: expect.any(String),
     });
-  });
-
-  it(`shouldn't run multiple DOM track events at the same time`, async () => {
-    await Promise.all([UITracker.track(), UITracker.track()]);
-
-    expect(getEvents().length).toBe(1);
   });
 });

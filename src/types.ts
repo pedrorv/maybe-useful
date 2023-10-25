@@ -78,8 +78,11 @@ export type MouseWatcherEvent = BaseWatcherEvent<
 
 export type UIWatcherEvent = BaseWatcherEvent<"ui", UIEventProps>;
 
+export type WindowWatcherEvent = BaseWatcherEvent<"window", WindowProps>;
+
 export type WatcherEvent =
   | DragWatcherEvent
   | KeyboardWatcherEvent
   | MouseWatcherEvent
-  | UIWatcherEvent;
+  | UIWatcherEvent
+  | WindowWatcherEvent;

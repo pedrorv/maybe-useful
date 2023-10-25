@@ -282,6 +282,7 @@ const recursiveWalk = (
 
 const createBaseClass = (context: CaptureContext) => {
   const dummyElm = context.doc.createElement("div");
+  dummyElm.setAttribute("data-watcher", "true");
   dummyElm.style["display"] = "none";
   context.doc.body.appendChild(dummyElm);
   const computedStyle = getComputedStyle(dummyElm);

@@ -3,11 +3,12 @@ import {
   KeyboardTracker,
   MouseTracker,
   UITracker,
+  WindowTracker,
 } from "@/trackers";
 import { setAppId, setDryRun, setServerUrl } from "@/utils/common";
 export { getEvents } from "@/utils/logger";
 
-const TRACKERS = [UITracker, DragTracker, KeyboardTracker, MouseTracker];
+const TRACKERS = [WindowTracker, DragTracker, KeyboardTracker, MouseTracker];
 
 let domObserver;
 export const init = async (
@@ -22,11 +23,27 @@ export const init = async (
   if (MutationObserver) {
     domObserver = new MutationObserver((mutations: MutationRecord[]) => {
       mutations.forEach((m) => {
-        const hasAlteredVisualElements = !![
-          ...Array.from(m.addedNodes),
-          ...Array.from(m.removedNodes),
-        ].filter((node) => node.nodeName !== "SCRIPT").length;
-        if (hasAlteredVisualElements) UITracker.trackDOMChange();
+        if (m.type === "attributes") {
+          console.log("trigger attribute");
+          UITracker.track();
+        } else {
+          const alteredNodes = [
+            ...Array.from(m.addedNodes),
+            ...Array.from(m.removedNodes),
+          ].filter((node) => {
+            if (node.nodeName === "SCRIPT") return false;
+            if ((node as any)?.getAttribute("data-watcher") === "true")
+              return false;
+
+            return true;
+          });
+          const hasAlteredVisualElements = !!alteredNodes.length;
+          if (hasAlteredVisualElements) {
+            console.log("trigger visual");
+            console.log(alteredNodes[0]);
+            UITracker.track();
+          }
+        }
       });
     });
   }
@@ -35,9 +52,13 @@ export const init = async (
   domObserver?.observe(document.documentElement || document.body, {
     childList: true,
     subtree: true,
+    attributes: true,
   });
 
-  if (!isDryRun) await UITracker.trackDOMChange();
+  if (!isDryRun) {
+    console.log("trigger initial");
+    await UITracker.track();
+  }
   TRACKERS.forEach((tracker) =>
     tracker.eventNames.forEach((name) => {
       tracker.listenerElement.removeEventListener(name, tracker.track);
