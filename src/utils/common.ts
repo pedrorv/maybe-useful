@@ -62,8 +62,26 @@ export const getWindowProps = (): WindowProps => {
   const { origin, pathname } = window.location;
   const { availHeight, availWidth, height, width } = window.screen;
   const orientation = window.screen.orientation.type;
+  const body = document.body;
+  const html = document.documentElement;
+  const htmlWidth = Math.max(
+    body.scrollWidth,
+    body.offsetWidth,
+    html.clientWidth,
+    html.scrollWidth,
+    html.offsetWidth
+  );
+  const htmlHeight = Math.max(
+    body.scrollHeight,
+    body.offsetHeight,
+    html.clientHeight,
+    html.scrollHeight,
+    html.offsetHeight
+  );
 
   return {
+    htmlWidth,
+    htmlHeight,
     innerWidth,
     innerHeight,
     scrollX,

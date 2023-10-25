@@ -46,6 +46,8 @@ export interface LocationProps {
 }
 
 export interface WindowProps {
+  htmlWidth: number;
+  htmlHeight: number;
   innerWidth: number;
   innerHeight: number;
   scrollX: number;
