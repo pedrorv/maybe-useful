@@ -4,10 +4,8 @@ export type DragTrackerEventProps = MouseTrackerEventProps;
 
 export interface KeyboardTrackerEventProps {
   altKey: boolean;
-  code: string;
   ctrlKey: boolean;
   isComposing: boolean;
-  key: string;
   location: number;
   metaKey: boolean;
   repeat: boolean;

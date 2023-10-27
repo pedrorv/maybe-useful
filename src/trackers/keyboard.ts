@@ -36,10 +36,8 @@ export class KeyboardTracker {
       path: getTrackerPath(e),
       properties: {
         altKey,
-        code,
         ctrlKey,
         isComposing,
-        key,
         location,
         metaKey,
         repeat,
