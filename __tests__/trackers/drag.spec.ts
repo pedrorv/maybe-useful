@@ -32,6 +32,7 @@ describe("DragTracker", () => {
       type: "drag",
       name: "drag",
       path: "html body div.outer div.middle div.inner",
+      uniqueSelector: expect.any(String),
       properties: {
         altKey: expect.any(Boolean),
         button: expect.any(Number),

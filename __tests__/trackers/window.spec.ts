@@ -23,6 +23,7 @@ describe("WindowTracker", () => {
       type: "window",
       name: "resize",
       path: "html",
+      uniqueSelector: "html",
       properties: {
         scrollX: expect.any(Number),
         scrollY: expect.any(Number),

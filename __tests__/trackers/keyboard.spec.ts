@@ -38,12 +38,11 @@ describe("KeyboardTracker", () => {
       type: "keyboard",
       name: "keydown",
       path: "html body div.outer div.middle input",
+      uniqueSelector: expect.any(String),
       properties: {
         altKey: false,
-        code: "1",
         ctrlKey: false,
         isComposing: false,
-        key: expect.any(String),
         location: 0,
         metaKey: false,
         repeat: false,

@@ -20,6 +20,7 @@ describe("UITracker", () => {
       type: "ui",
       name: "dom-change",
       path: "html",
+      uniqueSelector: "html",
       properties: {
         scrollX: expect.any(Number),
         scrollY: expect.any(Number),

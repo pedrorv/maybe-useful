@@ -53,6 +53,7 @@ describe("MouseTracker", () => {
       type: "mouse",
       name: "click",
       path: "html body div.outer div#middle.middle div#inner#super-inner.inner.super-inner",
+      uniqueSelector: expect.any(String),
       properties: {
         altKey: expect.any(Boolean),
         button: expect.any(Number),
