@@ -1,5 +1,10 @@
 import { DragWatcherEvent } from "../types";
-import { getAppId, getSessionId, getTrackerPath } from "../utils/common";
+import {
+  generateUniqueSelector,
+  getAppId,
+  getSessionId,
+  getTrackerPath,
+} from "../utils/common";
 import { logEvent } from "../utils/logger";
 
 export class DragTracker {
@@ -44,6 +49,7 @@ export class DragTracker {
       type: "drag",
       name: e.type,
       path: getTrackerPath(e),
+      uniqueSelector: generateUniqueSelector(e.target) ?? getTrackerPath(e),
       properties: {
         altKey,
         button,

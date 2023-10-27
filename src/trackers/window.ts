@@ -22,6 +22,7 @@ export class WindowTracker {
       type: "window",
       name: e.type,
       path: "html",
+      uniqueSelector: "html",
       properties: getWindowProps(),
       timestamp: Date.now(),
       sessionId: getSessionId(),

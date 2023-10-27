@@ -59,6 +59,7 @@ interface BaseWatcherEvent<K, T> {
   name: string;
   sessionId: string;
   path: string;
+  uniqueSelector: string;
   timestamp: number;
   properties: T;
   appId: string;

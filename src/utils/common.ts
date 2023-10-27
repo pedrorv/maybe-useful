@@ -1,5 +1,14 @@
 import { uuid } from "../utils/uuid";
 import { BrowserEvent, WindowProps } from "../types";
+import { getCssSelector } from "css-selector-generator";
+
+export const generateUniqueSelector = (el: unknown) => {
+  try {
+    return getCssSelector(el);
+  } catch (e) {
+    return null;
+  }
+};
 
 const extractAttr = (obj: HTMLElement, attr: string) => {
   const attrVal = obj?.[attr];

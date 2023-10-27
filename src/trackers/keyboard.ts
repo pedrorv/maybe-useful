@@ -1,5 +1,10 @@
 import { KeyboardWatcherEvent } from "../types";
-import { getAppId, getSessionId, getTrackerPath } from "../utils/common";
+import {
+  generateUniqueSelector,
+  getAppId,
+  getSessionId,
+  getTrackerPath,
+} from "../utils/common";
 import { logEvent } from "../utils/logger";
 
 export class KeyboardTracker {
@@ -20,10 +25,8 @@ export class KeyboardTracker {
   private static toWatcherEvent(e: KeyboardEvent): KeyboardWatcherEvent {
     const {
       altKey,
-      code,
       ctrlKey,
       isComposing,
-      key,
       location,
       metaKey,
       repeat,
@@ -34,6 +37,7 @@ export class KeyboardTracker {
       type: "keyboard",
       name: e.type,
       path: getTrackerPath(e),
+      uniqueSelector: generateUniqueSelector(e.target) ?? getTrackerPath(e),
       properties: {
         altKey,
         ctrlKey,

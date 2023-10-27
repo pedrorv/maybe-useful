@@ -24,7 +24,6 @@ export const init = async (
     domObserver = new MutationObserver((mutations: MutationRecord[]) => {
       mutations.forEach((m) => {
         if (m.type === "attributes") {
-          console.log("trigger attribute");
           UITracker.track();
         } else {
           const alteredNodes = [
@@ -39,8 +38,6 @@ export const init = async (
           });
           const hasAlteredVisualElements = !!alteredNodes.length;
           if (hasAlteredVisualElements) {
-            console.log("trigger visual");
-            console.log(alteredNodes[0]);
             UITracker.track();
           }
         }
@@ -56,7 +53,6 @@ export const init = async (
   });
 
   if (!isDryRun) {
-    console.log("trigger initial");
     await UITracker.track();
   }
   TRACKERS.forEach((tracker) =>

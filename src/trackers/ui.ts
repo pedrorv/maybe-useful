@@ -43,6 +43,7 @@ export class UITracker {
         type: "ui",
         name,
         path: "html",
+        uniqueSelector: "html",
         properties: { ...getWindowProps(), screenshot },
         timestamp: Date.now(),
         sessionId: getSessionId(),
