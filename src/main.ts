@@ -10,7 +10,7 @@ export { getEvents } from "@/utils/logger";
 
 const TRACKERS = [WindowTracker, DragTracker, KeyboardTracker, MouseTracker];
 
-let domObserver;
+let domObserver: MutationObserver;
 export const init = async (
   appId: string,
   serverUrl: string,
@@ -43,14 +43,16 @@ export const init = async (
         }
       });
     });
-  }
 
-  domObserver?.disconnect();
-  domObserver?.observe(document.documentElement || document.body, {
-    childList: true,
-    subtree: true,
-    attributes: true,
-  });
+    domObserver.disconnect();
+    domObserver.observe(document.documentElement || document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+    });
+  } else {
+    setInterval(() => UITracker.track(), 1000);
+  }
 
   if (!isDryRun) {
     await UITracker.track();
