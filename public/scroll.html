@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <title>Scroll</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        width: 200vw;
+      }
+
+      body {
+        background: #fff;
+        color: #333;
+        font-family: Lato, sans-serif;
+      }
+
+      .external {
+        width: 200vw;
+        display: flex;
+        justify-content: stretch;
+        align-items: center;
+        flex-wrap: nowrap;
+        overflow: visible;
+      }
+
+      .external div {
+        width: 100vw;
+        height: 100vh;
+        flex: 0 0 100%;
+      }
+
+      .external:nth-child(1) div.first {
+        background: #6425c4;
+      }
+
+      .external:nth-child(1) div.second {
+        background: #fff;
+      }
+
+      .external:nth-child(2) div.first {
+        background: #0089ff;
+      }
+
+      .external:nth-child(2) div.second {
+        background: #bbb;
+      }
+
+      .external:nth-child(3) div.first {
+        background: #ff7d51;
+      }
+
+      .external:nth-child(3) div.second {
+        background: #888;
+      }
+
+      .external:nth-child(4) div.first {
+        background: #005246;
+      }
+
+      .external:nth-child(4) div.second {
+        background: #444;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="external">
+      <div class="first"></div>
+      <div class="second"></div>
+    </section>
+    <section class="external">
+      <div class="first"></div>
+      <div class="second"></div>
+    </section>
+    <section class="external">
+      <div class="first"></div>
+      <div class="second"></div>
+    </section>
+    <section class="external">
+      <div class="first"></div>
+      <div class="second"></div>
+    </section>
+
+    <script src="watcher.js"></script>
+    <script>
+      window.onload = () =>
+        watcher.init(
+          "ebf05be7-d3fe-4df3-a789-0a641747d7a2",
+          "http://localhost:3000",
+          true
+        );
+    </script>
+  </body>
+</html>

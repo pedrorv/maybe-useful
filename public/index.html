@@ -1,237 +1,57 @@
 <html>
   <head>
-    <title>Todo App</title>
+    <title>Interactions</title>
     <link
       href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
       rel="stylesheet"
       type="text/css"
     />
     <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+      }
+
       body {
         background: #fff;
         color: #333;
         font-family: Lato, sans-serif;
       }
-      .container {
-        display: block;
-        width: 400px;
-        margin: 100px auto 0;
-      }
-      ul {
-        margin: 0;
-        padding: 0;
-      }
-      li * {
-        float: left;
-      }
-      li,
-      h3 {
-        clear: both;
-        list-style: none;
-      }
-      input,
-      button {
-        outline: none;
-      }
-      button {
-        background: none;
-        border: 0px;
-        color: #888;
-        font-size: 15px;
-        width: 60px;
-        margin: 10px 0 0;
-        font-family: Lato, sans-serif;
-        cursor: pointer;
-      }
-      button:hover {
-        color: #333;
+
+      .external {
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
-      h3,
-      label[for="new-task"] {
-        color: #333;
-        font-weight: 700;
-        font-size: 15px;
-        border-bottom: 2px solid #333;
-        padding: 30px 0 10px;
-        margin: 0;
-        text-transform: uppercase;
-      }
-      input[type="text"] {
-        margin: 0;
-        font-size: 18px;
-        line-height: 18px;
-        height: 18px;
-        padding: 10px;
-        border: 1px solid #ddd;
-        background: #fff;
-        border-radius: 6px;
-        font-family: Lato, sans-serif;
-        color: #888;
-      }
-      input[type="text"]:focus {
-        color: #333;
+      .external {
+        width: 100vw;
+        height: 100vh;
       }
 
-      label[for="new-task"] {
-        display: block;
-        margin: 0 0 20px;
+      .external:nth-child(1) {
+        background: #6425c4;
       }
-      input#new-task {
-        float: left;
-        width: 318px;
+      .external:nth-child(2) {
+        background: #0089ff;
       }
-      p > button:hover {
-        color: #0fc57c;
+      .external:nth-child(3) {
+        background: #ff7d51;
       }
-
-      li {
-        overflow: hidden;
-        padding: 20px 0;
-        border-bottom: 1px solid #eee;
-      }
-      li > input[type="checkbox"] {
-        margin: 0 10px;
-        position: relative;
-        top: 15px;
-      }
-      li > label {
-        font-size: 18px;
-        line-height: 40px;
-        width: 237px;
-        padding: 0 0 0 11px;
-      }
-      li > input[type="text"] {
-        width: 226px;
-      }
-      li > .delete:hover {
-        color: #cf2323;
-      }
-
-      #completed-tasks label {
-        text-decoration: line-through;
-        color: #888;
-      }
-
-      ul li input[type="text"] {
-        display: none;
-      }
-
-      ul li.editMode input[type="text"] {
-        display: block;
-      }
-
-      ul li.editMode label {
-        display: none;
+      .external:nth-child(4) {
+        background: #005246;
       }
     </style>
-    <!-- Example from: https://codepen.io/erinmars/pen/JJObjE -->
   </head>
   <body>
-    <div class="container">
-      <p>
-        <label for="new-task">Add Item</label>
-        <input id="new-task" type="text" />
-        <button>Add</button>
-      </p>
+    <section class="external"></section>
+    <section class="external"></section>
+    <section class="external"></section>
+    <section class="external"></section>
 
-      <h3>Todo</h3>
-      <ul id="incomplete-tasks"></ul>
-
-      <h3>Completed</h3>
-      <ul id="completed-tasks"></ul>
-    </div>
-
+    <script src="watcher.js"></script>
     <script>
-      var taskInput = document.getElementById("new-task");
-      var addButton = document.getElementsByTagName("button")[0];
-      var incompleteTasksHolder = document.getElementById("incomplete-tasks");
-      var completedTasksHolder = document.getElementById("completed-tasks");
-
-      var createNewTaskElement = function (taskString) {
-        var listItem = document.createElement("li");
-        var checkBox = document.createElement("input");
-        var label = document.createElement("label");
-        var editInput = document.createElement("input");
-        var editButton = document.createElement("button");
-        var deleteButton = document.createElement("button");
-
-        checkBox.type = "checkBox";
-        editInput.type = "text";
-
-        editButton.innerText = "Edit";
-        editButton.className = "edit";
-        deleteButton.innerText = "Delete";
-        deleteButton.className = "delete";
-        label.innerText = taskString;
-
-        listItem.appendChild(checkBox);
-        listItem.appendChild(label);
-        listItem.appendChild(editInput);
-        listItem.appendChild(editButton);
-        listItem.appendChild(deleteButton);
-
-        return listItem;
-      };
-
-      var addTask = function () {
-        var listItem = createNewTaskElement(taskInput.value);
-        incompleteTasksHolder.appendChild(listItem);
-        bindTaskEvents(listItem, taskCompleted);
-        taskInput.value = "";
-      };
-
-      var editTask = function () {
-        var listItem = this.parentNode;
-        var editInput = listItem.querySelector("input[type=text]");
-        var label = listItem.querySelector("label");
-        var containsClass = listItem.classList.contains("editMode");
-
-        if (containsClass) {
-          label.innerText = editInput.value;
-        } else {
-          editInput.value = label.innerText;
-        }
-        listItem.classList.toggle("editMode");
-      };
-
-      var deleteTask = function () {
-        var listItem = this.parentNode;
-        var ul = listItem.parentNode;
-        ul.removeChild(listItem);
-      };
-
-      var taskCompleted = function () {
-        var listItem = this.parentNode;
-        completedTasksHolder.appendChild(listItem);
-        bindTaskEvents(listItem, taskIncomplete);
-      };
-
-      var taskIncomplete = function () {
-        var listItem = this.parentNode;
-        incompleteTasksHolder.appendChild(listItem);
-        bindTaskEvents(listItem, taskCompleted);
-      };
-
-      addButton.addEventListener("click", addTask);
-
-      var bindTaskEvents = function (taskListItem, checkBoxEventHandler) {
-        var checkBox = taskListItem.querySelector('input[type="checkbox"]');
-        var editButton = taskListItem.querySelector("button.edit");
-        var deleteButton = taskListItem.querySelector("button.delete");
-        editButton.onclick = editTask;
-        deleteButton.onclick = deleteTask;
-        checkBox.onchange = checkBoxEventHandler;
-      };
-
-      for (var i = 0; i < incompleteTasksHolder.children.length; i++) {
-        bindTaskEvents(incompleteTasksHolder.children[i], taskCompleted);
-      }
-
-      for (var i = 0; i < completedTasksHolder.children.length; i++) {
-        bindTaskEvents(completedTasksHolder.children[i], taskIncomplete);
-      }
-
       window.onload = () =>
         watcher.init(
           "ebf05be7-d3fe-4df3-a789-0a641747d7a2",
@@ -239,6 +59,5 @@
           true
         );
     </script>
-    <script src="watcher.js"></script>
   </body>
 </html>
