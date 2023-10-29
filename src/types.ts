@@ -21,6 +21,8 @@ export interface MouseTrackerEventProps {
   metaKey: boolean;
   movementX: number;
   movementY: number;
+  pageX: number;
+  pageY: number;
   screenX: number;
   screenY: number;
   shiftKey: boolean;
