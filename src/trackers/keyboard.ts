@@ -4,6 +4,7 @@ import {
   getAppId,
   getSessionId,
   getTrackerPath,
+  getValueFromTarget,
 } from "../utils/common";
 import { logEvent } from "../utils/logger";
 
@@ -32,6 +33,7 @@ export class KeyboardTracker {
       repeat,
       shiftKey,
     } = e as KeyboardEvent;
+    const { value, checked } = getValueFromTarget(e.target);
 
     return {
       type: "keyboard",
@@ -46,6 +48,8 @@ export class KeyboardTracker {
         metaKey,
         repeat,
         shiftKey,
+        value,
+        checked,
       },
       timestamp: Date.now(),
       sessionId: getSessionId(),

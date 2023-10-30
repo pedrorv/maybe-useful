@@ -161,7 +161,8 @@ const handleInputElement = (
   domElm: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement,
   newElm: Element
 ): void => {
-  newElm.setAttribute("value", domElm.value);
+  const value = (domElm.value || "").replace(/\S/g, "*");
+  newElm.setAttribute("value", value);
   const domType = domElm.getAttribute("type");
   if (
     domElm instanceof HTMLInputElement &&
@@ -173,7 +174,7 @@ const handleInputElement = (
       newElm.removeAttribute("checked");
     }
   } else if (domElm instanceof HTMLTextAreaElement && domElm.value) {
-    (newElm as HTMLInputElement).innerText = domElm.value;
+    (newElm as HTMLInputElement).innerText = value;
   } else if (
     domElm instanceof HTMLSelectElement &&
     domElm.value &&

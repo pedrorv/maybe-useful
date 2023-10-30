@@ -10,6 +10,8 @@ export interface KeyboardTrackerEventProps {
   metaKey: boolean;
   repeat: boolean;
   shiftKey: boolean;
+  value: string;
+  checked: boolean;
 }
 
 export interface MouseTrackerEventProps {

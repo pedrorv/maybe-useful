@@ -27,6 +27,30 @@ export const extractIds = (el: HTMLElement) =>
     .map((id) => `#${id}`)
     .join("");
 
+const valueToAsterisks = (val: string) => (val || "").replace(/\S/g, "*");
+
+export const getValueFromTarget = (target: KeyboardEvent["target"]) => {
+  if (
+    target instanceof HTMLInputElement &&
+    ["checkbox", "radio"].includes(
+      (target.getAttribute("type") || "").toLocaleLowerCase()
+    )
+  ) {
+    return { value: valueToAsterisks(target.value), checked: target.checked };
+  } else if (
+    target instanceof HTMLInputElement ||
+    target instanceof HTMLTextAreaElement
+  ) {
+    if ("checked" in target) {
+      return { value: valueToAsterisks(target.value), checked: target.checked };
+    } else {
+      return { value: valueToAsterisks(target.value), checked: false };
+    }
+  }
+
+  return { value: "", checked: false };
+};
+
 const eventToTargetPath = (event: BrowserEvent): EventTarget[] =>
   Array.from(event.composedPath()).reverse();
 
