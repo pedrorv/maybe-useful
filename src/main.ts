@@ -31,7 +31,7 @@ export const init = async (
             ...Array.from(m.removedNodes),
           ].filter((node) => {
             if (node.nodeName === "SCRIPT") return false;
-            if ((node as any)?.getAttribute("data-watcher") === "true")
+            if ((node as any)?.getAttribute?.("data-watcher") === "true")
               return false;
 
             return true;

@@ -13,6 +13,13 @@
         margin: 0;
       }
 
+      h1 {
+        font-size: 2rem;
+        margin-top: 0;
+        width: 100%;
+        text-align: center;
+      }
+
       body {
         background: #fff;
         color: #333;
@@ -23,11 +30,13 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
       }
 
       .external {
         width: 100vw;
         height: 100vh;
+        color: #fff;
       }
 
       .external:nth-child(1) {
@@ -42,16 +51,158 @@
       .external:nth-child(4) {
         background: #005246;
       }
+
+      .counter {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .counter button {
+        outline: none;
+        border: none;
+        width: 80px;
+        height: 40px;
+        border-radius: 0.5rem;
+        font-weight: bold;
+        font-size: 1.5rem;
+        background-color: #fff;
+        color: #333;
+      }
+
+      .counter p {
+        margin: 0 2rem;
+        font-size: 2rem;
+        min-width: 5rem;
+        text-align: center;
+      }
+
+      .drag-n-drop {
+        display: grid;
+        grid-template-columns: 200px 200px;
+        grid-row: auto auto;
+        grid-column-gap: 20px;
+        grid-row-gap: 20px;
+      }
+
+      .drop-zone {
+        width: 200px;
+        height: 200px;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 0.25rem dashed transparent;
+        box-sizing: border-box;
+      }
+
+      .drop-zone.hovered {
+        border-color: #333;
+      }
+
+      #box {
+        width: 100px;
+        height: 100px;
+        background-color: #005246;
+      }
     </style>
   </head>
   <body>
-    <section class="external"></section>
-    <section class="external"></section>
-    <section class="external"></section>
-    <section class="external"></section>
+    <section class="external">
+      <h1>Contador</h1>
+      <main class="counter">
+        <button id="sub-10">-10</button>
+        <button id="sub-1">-1</button>
+        <p id="count">0</p>
+        <button id="add-1">+1</button>
+        <button id="add-10">+10</button>
+      </main>
+    </section>
+    <section class="external">
+      <h1>Caracteres digitados: <span id="char-count">0</span></h1>
+      <textarea id="chars" cols="30" rows="10"></textarea>
+    </section>
+    <section class="external">
+      <h1>Arraste a caixa verde para outro quadrado</h1>
+      <main class="drag-n-drop">
+        <div class="drop-zone">
+          <div id="box" draggable="true"></div>
+        </div>
+        <div class="drop-zone"></div>
+        <div class="drop-zone"></div>
+        <div class="drop-zone"></div>
+      </main>
+    </section>
+    <!-- <section class="external"></section> -->
 
     <script src="watcher.js"></script>
     <script>
+      // counter
+      const count = document.getElementById("count");
+      const sub10 = document.getElementById("sub-10");
+      const sub1 = document.getElementById("sub-1");
+      const add1 = document.getElementById("add-1");
+      const add10 = document.getElementById("add-10");
+
+      const handleCount = (addVal) => () => {
+        count.innerHTML = +(count.innerHTML || 0) + addVal;
+      };
+
+      sub10.addEventListener("click", handleCount(-10));
+      sub1.addEventListener("click", handleCount(-1));
+      add1.addEventListener("click", handleCount(1));
+      add10.addEventListener("click", handleCount(10));
+
+      // char counter
+      const charCount = document.getElementById("char-count");
+      const chars = document.getElementById("chars");
+
+      chars.addEventListener(
+        "input",
+        () => (charCount.innerHTML = chars.value.length)
+      );
+
+      // drag and drop
+      const box = document.getElementById("box");
+      const dropZones = document.querySelectorAll(".drop-zone");
+
+      function dragStart() {
+        this.className += " hold";
+        setTimeout(() => (this.className = "invisible"), 0);
+      }
+
+      function dragEnd() {
+        this.className = "fill";
+      }
+
+      box.addEventListener("dragstart", dragStart);
+      box.addEventListener("dragend", dragEnd);
+
+      function dragOver(e) {
+        e.preventDefault();
+      }
+
+      function dragEnter(e) {
+        e.preventDefault();
+        this.className += " hovered";
+      }
+
+      function dragLeave() {
+        this.className = "drop-zone";
+      }
+
+      function dragDrop() {
+        this.className = "drop-zone";
+        this.append(box);
+      }
+
+      for (const dropZone of dropZones) {
+        dropZone.addEventListener("dragover", dragOver);
+        dropZone.addEventListener("dragenter", dragEnter);
+        dropZone.addEventListener("dragleave", dragLeave);
+        dropZone.addEventListener("drop", dragDrop);
+      }
+
       window.onload = () =>
         watcher.init(
           "ebf05be7-d3fe-4df3-a789-0a641747d7a2",
