@@ -25,13 +25,17 @@ Initialize `watcher` with your application ID and server URL. The server URL mus
 
 ### Initializing the Script
 
+For effective tracking, initialize watcher upon page load. The init function returns a Promise, which can be awaited if necessary.
+
 ```javascript
 import { init, stop, getSessionId } from "path/to/watcher";
 
-init(appId, "your-watcher-server-url");
+window.addEventListener("load", async () => {
+  await init("your-app-id", "your-watcher-server-url");
 
-// Retrieve the session ID
-const sessionId = getSessionId();
+  // Optional: Retrieve the session ID
+  const sessionId = getSessionId();
+});
 ```
 
 To stop the tracking, use the `stop` function:
