@@ -6,6 +6,7 @@ import {
   WindowTracker,
 } from "@/trackers";
 import { setAppId, setDryRun, setServerUrl } from "@/utils/common";
+export { getSessionId } from "@/utils/common";
 export { getEvents } from "@/utils/logger";
 
 const TRACKERS = [WindowTracker, DragTracker, KeyboardTracker, MouseTracker];
