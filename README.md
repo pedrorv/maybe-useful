@@ -6,7 +6,7 @@
 
 ## Features
 
-- Utilizes `DragTracker.`, `KeyboardTracker`, `MouseTracker`, `UITracker`, and `WindowTracker`. Check each tracker's code to see the tracked events;
+- Utilizes `DragTracker`, `KeyboardTracker`, `MouseTracker`, `UITracker`, and `WindowTracker`. Check each tracker's code to see the tracked events;
 - Employs `MutationObserver` to monitor DOM changes for UI tracking;
 - Manages event listeners for user interaction tracking.
 
