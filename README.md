@@ -2,15 +2,13 @@
 
 ## Introduction
 
-**watcher** is a JavaScript script for collecting usage data from browser-generated events. It centralizes its functionality into a global object named `watcher`.
+**watcher** is a JavaScript script for collecting usage data from browser-generated events. It centralizes its functionality into a global object named `watcher`. It sends its events to a running instance of a [watcher-server](https://github.com/pedrorv/watcher-server) and the events can be seen as data visualizations using the [watcher-dashboard](https://github.com/pedrorv/watcher-dashboard).
 
 ## Features
 
-- **Comprehensive Tracking**: Utilizes `DragTracker`, `KeyboardTracker`, `MouseTracker`, `UITracker`, and `WindowTracker`.
-- **Mutation Observation**: Employs `MutationObserver` to monitor DOM changes for UI tracking.
-- **Configurable**: Set application ID, server URL, and dry run mode.
-- **Event Handling**: Manages event listeners for user interaction tracking.
-- **Session Management**: `getSessionId` function for session ID retrieval.
+- Utilizes `DragTracker`, `KeyboardTracker`, `MouseTracker`, `UITracker`, and `WindowTracker`. Check each tracker's code to see the tracked events;
+- Employs `MutationObserver` to monitor DOM changes for UI tracking;
+- Manages event listeners for user interaction tracking.
 
 ## Installation
 
