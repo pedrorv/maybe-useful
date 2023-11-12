@@ -6,10 +6,13 @@ import {
   WindowTracker,
 } from "@/trackers";
 import { setAppId, setDryRun, setServerUrl } from "@/utils/common";
+import { debounce } from "@/utils/function";
+
 export { getSessionId } from "@/utils/common";
 export { getEvents } from "@/utils/logger";
 
 const TRACKERS = [WindowTracker, DragTracker, KeyboardTracker, MouseTracker];
+const debouncedUITrack = debounce(UITracker.track, 100);
 
 let domObserver: MutationObserver;
 export const init = async (
@@ -64,6 +67,9 @@ export const init = async (
       tracker.listenerElement.addEventListener(name, tracker.track);
     })
   );
+
+  window.removeEventListener("resize", debouncedUITrack);
+  window.addEventListener("resize", debouncedUITrack);
 };
 
 export const stop = () => {
@@ -73,4 +79,5 @@ export const stop = () => {
       tracker.listenerElement.removeEventListener(name, tracker.track);
     })
   );
+  window.removeEventListener("resize", debouncedUITrack);
 };

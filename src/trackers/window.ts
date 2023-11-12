@@ -4,7 +4,7 @@ import { logEvent } from "../utils/logger";
 
 export class WindowTracker {
   static get eventNames(): string[] {
-    return ["resize", "scroll"];
+    return ["scroll"];
   }
 
   static get listenerElement() {
