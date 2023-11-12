@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import { OutputType, Options, CaptureOutput, CaptureFunction } from "./types";
+import { CaptureFunction } from "./types";
 import { goCapture } from "./capturer";
 
 export { OutputType, Options, CaptureOutput, CaptureFunction } from "./types";

@@ -6,13 +6,14 @@ import {
   WindowTracker,
 } from "@/trackers";
 import { setAppId, setDryRun, setServerUrl } from "@/utils/common";
-import { debounce } from "@/utils/function";
+import { debounce, throttle } from "@/utils/function";
 
 export { getSessionId } from "@/utils/common";
 export { getEvents } from "@/utils/logger";
 
 const TRACKERS = [WindowTracker, DragTracker, KeyboardTracker, MouseTracker];
 const debouncedUITrack = debounce(UITracker.track, 100);
+const throttledUITrack = throttle(UITracker.track, 100);
 
 let domObserver: MutationObserver;
 export const init = async (
@@ -28,7 +29,7 @@ export const init = async (
     domObserver = new MutationObserver((mutations: MutationRecord[]) => {
       mutations.forEach((m) => {
         if (m.type === "attributes") {
-          UITracker.track();
+          throttledUITrack();
         } else {
           const alteredNodes = [
             ...Array.from(m.addedNodes),
@@ -42,7 +43,7 @@ export const init = async (
           });
           const hasAlteredVisualElements = !!alteredNodes.length;
           if (hasAlteredVisualElements) {
-            UITracker.track();
+            throttledUITrack();
           }
         }
       });
