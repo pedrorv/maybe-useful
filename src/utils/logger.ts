@@ -3,8 +3,11 @@ import { getServerUrl, getDryRun } from "./common";
 
 const events: WatcherEvent[] = [];
 
-const sendEvents = (events: WatcherEvent | WatcherEvent[]) =>
-  fetch(`${getServerUrl()}/events`, {
+const sendEvents = (events: WatcherEvent | WatcherEvent[]) => {
+  if (!events) return;
+  if (Array.isArray(events) && !events.length) return;
+
+  return fetch(`${getServerUrl()}/events`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -13,6 +16,7 @@ const sendEvents = (events: WatcherEvent | WatcherEvent[]) =>
   })
     .then(() => {})
     .catch(() => {});
+};
 
 setInterval(() => {
   if (!getDryRun()) {
