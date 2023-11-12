@@ -3,6 +3,8 @@ import { clearEvents } from "@/utils/logger";
 import { init, stop } from "@/main";
 import { getAppId, getServerUrl } from "@/utils/common";
 
+const TOTAL_RESIZE_EVENTS = 1;
+
 const TOTAL_DOCUMENT_EVENTS = Object.keys(trackers)
   .filter((trackerName) => trackers[trackerName].listenerElement === document)
   .reduce(
@@ -46,10 +48,10 @@ describe("Main", () => {
         TOTAL_DOCUMENT_EVENTS
       );
       expect(window.removeEventListener).toHaveBeenCalledTimes(
-        TOTAL_WINDOW_EVENTS
+        TOTAL_WINDOW_EVENTS + TOTAL_RESIZE_EVENTS
       );
       expect(window.addEventListener).toHaveBeenCalledTimes(
-        TOTAL_WINDOW_EVENTS
+        TOTAL_WINDOW_EVENTS + TOTAL_RESIZE_EVENTS
       );
     });
   });
@@ -65,7 +67,7 @@ describe("Main", () => {
         TOTAL_DOCUMENT_EVENTS
       );
       expect(window.removeEventListener).toHaveBeenCalledTimes(
-        TOTAL_WINDOW_EVENTS
+        TOTAL_WINDOW_EVENTS + TOTAL_RESIZE_EVENTS
       );
     });
   });
