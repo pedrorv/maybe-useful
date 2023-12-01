@@ -1,0 +1,87 @@
+<html>
+  <head>
+    <title>Canvas</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        background: #fff;
+        color: #333;
+        font-family: Lato, sans-serif;
+      }
+
+      .external {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .external {
+        width: 100vw;
+        height: 100vh;
+        color: #fff;
+      }
+
+      .external:nth-child(1) {
+        background: #6425c4;
+      }
+
+      .box {
+        position: absolute;
+        background: #fff;
+        width: 30px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="external"></section>
+    <script src="watcher.js"></script>
+
+    <script>
+      const section = document.querySelector(".external");
+      const newDivs = new Array(1000).fill(null);
+
+      newDivs.forEach(() => {
+        if (!section) return;
+        const div = document.createElement("div");
+        div.classList.add("box");
+        section.appendChild(div);
+      });
+
+      const getRandomNumber = (min, max) => Math.random() * (max - min) + min;
+      const divs = document.querySelectorAll(".box");
+
+      const moveDivs = () => {
+        const winWidth = window.innerWidth;
+        const winHeight = window.innerHeight;
+
+        divs.forEach((div) => {
+          div.style.top = getRandomNumber(0, winHeight - 30) + "px";
+          div.style.left = getRandomNumber(0, winWidth - 30) + "px";
+        });
+
+        requestAnimationFrame(moveDivs);
+      };
+
+      requestAnimationFrame(moveDivs);
+
+      window.onload = () =>
+        watcher.init(
+          "d36aeb95-2775-46de-aa91-1bdbe432f3e2",
+          "http://localhost:3000"
+          // true
+        );
+    </script>
+  </body>
+</html>
